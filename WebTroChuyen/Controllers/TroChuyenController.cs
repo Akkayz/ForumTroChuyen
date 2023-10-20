@@ -2,9 +2,9 @@
 
 namespace WebTroChuyen.Controllers
 {
-    public class TrangChuController : Controller
+    public class TroChuyenController : Controller
     {
-        // GET: TrangChu
+        // GET: TroChuyen
         public ActionResult Index()
         {
             return View();
