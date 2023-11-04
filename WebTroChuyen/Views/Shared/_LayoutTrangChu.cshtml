@@ -6,12 +6,13 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Css/Style.css" rel="stylesheet">
     <link rel="stylesheet" href="~/Content/font-awesome-6.4.2-pro/css/all.css">
     <script src="~/Scripts/bootstrap.bundle.min.js"></script>
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-0">
-        <div class="container">
+<body style="background-color: #ebebeb;">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+        <div class="container" style="max-width:1000px">
             <a href="#"><img width="150" height="35" src="~/Icon/BeeChat.svg"></a>
             <i class="fa-regular fa-comment" style="color: #6a6964;"></i>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -26,8 +27,8 @@
             </div>
         </div>
     </nav>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light py-0">
-        <div class="container">
+    <nav class="navbar navbar-expand py-0">
+        <div class="container" style="max-width:1000px">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -45,5 +46,19 @@
     <div class="container">
         @RenderBody()
     </div>
+    <footer class="bg-dark text-light" style="position: absolute; width: 100%;">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <a itemprop="url" href="/">
+                        <img itemprop="logo" src="~/Icon/BeeChat.svg" alt="BeeBook">
+                    </a>
+                    <p>
+                        Copyright © 2023 NetChuyen
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
