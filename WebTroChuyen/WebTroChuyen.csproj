@@ -117,6 +117,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DangBaiController.cs" />
     <Compile Include="Controllers\TrangChuController.cs" />
     <Compile Include="Controllers\TroChuyenController.cs" />
     <Compile Include="Global.asax.cs">
@@ -148,8 +149,11 @@
     <Content Include="Content\Site.css" />
     <Content Include="Icon\BeeChat.svg" />
     <Content Include="Images\BeeChat.png" />
+    <Content Include="Images\Chats\2-thi-ghk1.jpg" />
     <Content Include="Images\logo-netchuyen.png" />
+    <Content Include="Images\Users\1326444.jpg" />
     <Content Include="Images\Users\1385117.jpg" />
+    <Content Include="Images\Users\994571.jpg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -223,6 +227,7 @@
     <Content Include="Views\Shared\_LayoutTrangChu.cshtml" />
     <Content Include="Views\TrangChu\Index.cshtml" />
     <Content Include="Views\TroChuyen\Index.cshtml" />
+    <Content Include="Views\DangBai\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
