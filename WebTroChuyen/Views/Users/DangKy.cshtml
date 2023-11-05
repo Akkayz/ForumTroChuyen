@@ -1,0 +1,68 @@
+﻿@{
+    ViewBag.Title = "DangKy";
+    Layout = "~/Views/Shared/_LayoutTrangChu.cshtml";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center mt-5">ĐĂNG KÝ</h2>
+            <div class="card my-5">
+                <div class="card-body p-lg-5">
+                    @using (Html.BeginForm("DangKy", "Users", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="mb-3">
+                            <p>Tên người dùng</p>
+                            <input type="text" name="TenNguoiDung" class="form-control" placeholder="Tên người dùng" required="required" />
+                            @Html.ValidationMessage("TenNguoiDung", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="mb-3">
+                            <p>User Name</p>
+                            <input type="text" name="UserName" class="form-control" placeholder="Tài Khoản" required="required" />
+                            @Html.ValidationMessage("UserName", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="mb-3">
+                            <p>Password</p>
+                            <input type="password" name="Password" class="form-control" placeholder="Mật khẩu" required="required" />
+                            @Html.ValidationMessage("Password", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="mb-3">
+                            <p>Email</p>
+                            <input type="text" name="Email" class ="form-control" placeholder="Email" required="required" />
+                            @Html.ValidationMessage("Email", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="mb-3">
+                            <p>Avatar</p>
+                            <input type="file" class="form-control" id="Avatar" name="Avatar" accept="image/*" />
+                        </div>
+                        <!-- Hiển thị hình ảnh đã tải lên bên dưới phần Avatar -->
+                        <div class="mb-3">
+                            <p>Hình ảnh đã tải lên:</p>
+                            <img id="AvatarPreview" src="#" alt="Avatar Preview" style="max-width: 100%;" />
+                        </div>
+                        <div class="mb-3">
+                            <p>Giới tính</p>
+                            <select name="GioiTinh" class="form-control">
+                                <option value="0">Nam</option>
+                                <option value="1">Nữ</option>
+                            </select>
+                            @Html.ValidationMessage("GioiTinh", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-lg w-100">Đăng ký</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript để hiển thị hình ảnh đã tải lên -->
+<script>
+    document.getElementById('Avatar').addEventListener('change', function (e) {
+        var preview = document.getElementById('AvatarPreview');
+        preview.src = URL.createObjectURL(e.target.files[0]);
+    });
+</script>

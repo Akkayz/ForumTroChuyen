@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet">
-    <link href="~/Css/Style.css" rel="stylesheet">
     <link rel="stylesheet" href="~/Content/font-awesome-6.4.2-pro/css/all.css">
     <script src="~/Scripts/bootstrap.bundle.min.js"></script>
 </head>
@@ -18,10 +17,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><span><i class="fa-regular fa-user"></i></span> Sign Up</a>
+                        <a class="nav-link" href="@Url.Action("DangKy", "Users")"><span><i class="fa-regular fa-user"></i></span> Sign Up</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><span><i class="fa-regular fa-right-to-bracket"></i></span> Login</a>
+                        <a class="nav-link" href="@Url.Action("DangNhap", "Users")"><span><i class="fa-regular fa-right-to-bracket"></i></span> Login</a>
                     </li>
                 </ul>
             </div>
@@ -34,11 +33,11 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link" href="#"><i class="fa-regular fa-house"></i></a>
+                    <a class="nav-link" href="@Url.Action("Index", "DangBai")"><i class="fa-regular fa-house"></i></a>
                     <a class="nav-link" href="#">ĐĂNG BÀI</a>
                 </div>
                 <div class="navbar-nav">
-                    <a class="nav-link" href="#">CHAT</a>
+                    <a class="nav-link" href="@Url.Action("Index", "TroChuyen")">CHAT</a>
                 </div>
             </div>
         </div>

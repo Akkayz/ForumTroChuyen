@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8de8bafcea8242b7856d4121c0b790f5" Name="Diagram1">
+        <EntityTypeShape EntityType="ForumTroChuyenModel.BaiViet" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="ForumTroChuyenModel.BinhLuan" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ForumTroChuyenModel.Chat" Width="1.5" PointX="3" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ForumTroChuyenModel.DanhMuc" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ForumTroChuyenModel.DiemSoNguoiDung" Width="1.5" PointX="3" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ForumTroChuyenModel.Dislike" Width="1.5" PointX="5.25" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ForumTroChuyenModel.HeThongCapDo" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ForumTroChuyenModel.HoatDong" Width="1.5" PointX="3.75" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ForumTroChuyenModel.HoatDongNguoiDung" Width="1.5" PointX="6" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ForumTroChuyenModel.Like" Width="1.5" PointX="8.25" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ForumTroChuyenModel.NguoiDung" Width="1.5" PointX="0.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ForumTroChuyenModel.sysdiagram" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="ForumTroChuyenModel.FK__Dislikes__BaiVie__7A672E12" ManuallyRouted="false" />
+        <AssociationConnector Association="ForumTroChuyenModel.FK__Likes__BaiVietID__76969D2E" ManuallyRouted="false" />
+        <AssociationConnector Association="ForumTroChuyenModel.FK_BaiViet_DanhMuc" ManuallyRouted="false" />
+        <AssociationConnector Association="ForumTroChuyenModel.FK_BaiViet_NguoiDung" ManuallyRouted="false" />
+        <AssociationConnector Association="ForumTroChuyenModel.FK_BinhLuan_BaiViet" ManuallyRouted="false" />
+        <AssociationConnector Association="ForumTroChuyenModel.FK_BinhLuan_NguoiDung" ManuallyRouted="false" />
+        <AssociationConnector Association="ForumTroChuyenModel.FK_Chat_NguoiDung" ManuallyRouted="false" />
+        <AssociationConnector Association="ForumTroChuyenModel.FK__DiemSoNgu__UserI__7E37BEF6" ManuallyRouted="false" />
+        <AssociationConnector Association="ForumTroChuyenModel.FK__Dislikes__UserID__7B5B524B" ManuallyRouted="false" />
+        <AssociationConnector Association="ForumTroChuyenModel.FK__HoatDongN__HoatD__05D8E0BE" ManuallyRouted="false" />
+        <AssociationConnector Association="ForumTroChuyenModel.FK__HoatDongN__UserI__04E4BC85" ManuallyRouted="false" />
+        <AssociationConnector Association="ForumTroChuyenModel.FK__Likes__UserID__778AC167" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
