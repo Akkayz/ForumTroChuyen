@@ -33,7 +33,7 @@
           </Key>
           <Property Name="MaChat" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
-          <Property Name="TinNhan" Type="text" Nullable="false" />
+          <Property Name="TinNhan" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="ThoiGianGui" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="DanhMuc">
@@ -420,7 +420,7 @@
           </Key>
           <Property Name="MaChat" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="TinNhan" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TinNhan" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ThoiGianGui" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="NguoiDung" Relationship="Self.FK_Chat_NguoiDung" FromRole="Chat" ToRole="NguoiDung" />
         </EntityType>

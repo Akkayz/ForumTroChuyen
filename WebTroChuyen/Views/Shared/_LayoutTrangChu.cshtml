@@ -16,12 +16,28 @@
             <i class="fa-regular fa-comment" style="color: #6a6964;"></i>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("DangKy", "Users")"><span><i class="fa-regular fa-user"></i></span> Sign Up</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("DangNhap", "Users")"><span><i class="fa-regular fa-right-to-bracket"></i></span> Login</a>
-                    </li>
+                    @if (Session["UserName"] != null)
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="~/Images/UserAvatar/@Session["Avatar"]" width="30" height="30" alt="User Avatar" class="rounded-circle">
+                                @Session["UserName"]
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Trang cá nhân</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("Logout", "Users")">Thoát</a></li>
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("DangKy", "Users")"><span><i class="fa-regular fa-user"></i></span> Sign Up</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("DangNhap", "Users")"><span><i class="fa-regular fa-right-to-bracket"></i></span> Login</a>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>

@@ -1,13 +1,19 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Linq;
+using System.Web.Mvc;
+using WebTroChuyen.Models;
 
 namespace WebTroChuyen.Controllers
 {
     public class TroChuyenController : Controller
     {
-        // GET: TroChuyen
+        private ForumTroChuyenEntities db = new ForumTroChuyenEntities();
+
         public ActionResult Index()
         {
-            return View();
+            var messages = db.Chats.OrderBy(chat => chat.ThoiGianGui).ToList();
+
+            return View(messages);
         }
     }
 }

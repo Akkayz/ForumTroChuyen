@@ -148,13 +148,12 @@ namespace WebTroChuyen.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Kiểm tra xem UserName và Password có khớp với dữ liệu trong cơ sở dữ liệu hay không
                 var user = db.NguoiDungs.FirstOrDefault(u => u.UserName == model.UserName && u.Password == model.Password);
 
                 if (user != null)
                 {
-                    // Đăng nhập thành công, thực hiện các hành động cần thiết (ví dụ: lưu thông tin đăng nhập vào Session)
-                    // Sau đó điều hướng đến trang chính hoặc trang khác
+                    Session["UserName"] = user.UserName;
+                    Session["Avatar"] = user.Avatar;
                     return RedirectToAction("Index", "DangBai");
                 }
                 else
@@ -164,6 +163,16 @@ namespace WebTroChuyen.Controllers
             }
 
             return View(model);
+        }
+
+        public ActionResult Logout()
+        {
+            // Xóa thông tin đăng nhập khỏi Session
+            Session.Remove("UserName");
+            Session.Remove("Avatar");
+
+            // Điều hướng người dùng đến trang chính hoặc bất kỳ trang nào bạn muốn
+            return RedirectToAction("Index", "DangBai"); // Ví dụ: điều hướng đến trang chính của ứng dụng
         }
 
         private bool IsValidEmail(string email)
