@@ -34,9 +34,9 @@ namespace WebTroChuyen.Models
         public string Avatar { get; set; }
         public System.DateTime NgayDangKy { get; set; }
         public byte TrangThai { get; set; }
-        public string VaiTro { get; set; }
-        public Nullable<int> CapDo { get; set; }
-        public Nullable<int> GioiTinh { get; set; }
+        public int VaitroID { get; set; }
+        public int CapDo { get; set; }
+        public int GioiTinh { get; set; }
         public string Token { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -53,5 +53,6 @@ namespace WebTroChuyen.Models
         public virtual ICollection<HoatDongNguoiDung> HoatDongNguoiDungs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Like> Likes { get; set; }
+        public virtual VaiTro VaiTro { get; set; }
     }
 }

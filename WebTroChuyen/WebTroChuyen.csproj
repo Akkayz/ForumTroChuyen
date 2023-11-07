@@ -183,6 +183,9 @@
     <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>DbForumTroChuyen.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\VaiTro.cs">
+      <DependentUpon>DbForumTroChuyen.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

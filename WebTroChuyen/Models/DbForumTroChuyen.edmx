@@ -104,9 +104,9 @@
           <Property Name="Avatar" Type="varchar" MaxLength="255" />
           <Property Name="NgayDangKy" Type="datetime" Nullable="false" />
           <Property Name="TrangThai" Type="tinyint" Nullable="false" />
-          <Property Name="VaiTro" Type="varchar" MaxLength="50" />
-          <Property Name="CapDo" Type="int" />
-          <Property Name="GioiTinh" Type="int" />
+          <Property Name="VaitroID" Type="int" Nullable="false" />
+          <Property Name="CapDo" Type="int" Nullable="false" />
+          <Property Name="GioiTinh" Type="int" Nullable="false" />
           <Property Name="Token" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="sysdiagrams">
@@ -118,6 +118,13 @@
           <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="VaiTro">
+          <Key>
+            <PropertyRef Name="VaitroID" />
+          </Key>
+          <Property Name="VaitroID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenVaiTro" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK__DiemSoNgu__UserI__7E37BEF6">
           <End Role="NguoiDung" Type="Self.NguoiDung" Multiplicity="0..1" />
@@ -131,7 +138,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Dislikes__BaiVie__7A672E12">
+        <Association Name="FK__Dislikes__BaiVie__534D60F1">
           <End Role="BaiViet" Type="Self.BaiViet" Multiplicity="1" />
           <End Role="Dislikes" Type="Self.Dislikes" Multiplicity="*" />
           <ReferentialConstraint>
@@ -155,7 +162,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__HoatDongN__HoatD__05D8E0BE">
+        <Association Name="FK__HoatDongN__HoatD__5535A963">
           <End Role="HoatDong" Type="Self.HoatDong" Multiplicity="0..1" />
           <End Role="HoatDongNguoiDung" Type="Self.HoatDongNguoiDung" Multiplicity="*" />
           <ReferentialConstraint>
@@ -179,7 +186,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Likes__BaiVietID__76969D2E">
+        <Association Name="FK__Likes__BaiVietID__571DF1D5">
           <End Role="BaiViet" Type="Self.BaiViet" Multiplicity="1" />
           <End Role="Likes" Type="Self.Likes" Multiplicity="*" />
           <ReferentialConstraint>
@@ -263,6 +270,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_NguoiDung_VaiTro">
+          <End Role="VaiTro" Type="Self.VaiTro" Multiplicity="1" />
+          <End Role="NguoiDung" Type="Self.NguoiDung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VaiTro">
+              <PropertyRef Name="VaitroID" />
+            </Principal>
+            <Dependent Role="NguoiDung">
+              <PropertyRef Name="VaitroID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -307,11 +326,12 @@
           <EntitySet Name="Likes" EntityType="Self.Likes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NguoiDung" EntityType="Self.NguoiDung" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VaiTro" EntityType="Self.VaiTro" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__DiemSoNgu__UserI__7E37BEF6" Association="Self.FK__DiemSoNgu__UserI__7E37BEF6">
             <End Role="NguoiDung" EntitySet="NguoiDung" />
             <End Role="DiemSoNguoiDung" EntitySet="DiemSoNguoiDung" />
           </AssociationSet>
-          <AssociationSet Name="FK__Dislikes__BaiVie__7A672E12" Association="Self.FK__Dislikes__BaiVie__7A672E12">
+          <AssociationSet Name="FK__Dislikes__BaiVie__534D60F1" Association="Self.FK__Dislikes__BaiVie__534D60F1">
             <End Role="BaiViet" EntitySet="BaiViet" />
             <End Role="Dislikes" EntitySet="Dislikes" />
           </AssociationSet>
@@ -319,7 +339,7 @@
             <End Role="NguoiDung" EntitySet="NguoiDung" />
             <End Role="Dislikes" EntitySet="Dislikes" />
           </AssociationSet>
-          <AssociationSet Name="FK__HoatDongN__HoatD__05D8E0BE" Association="Self.FK__HoatDongN__HoatD__05D8E0BE">
+          <AssociationSet Name="FK__HoatDongN__HoatD__5535A963" Association="Self.FK__HoatDongN__HoatD__5535A963">
             <End Role="HoatDong" EntitySet="HoatDong" />
             <End Role="HoatDongNguoiDung" EntitySet="HoatDongNguoiDung" />
           </AssociationSet>
@@ -327,7 +347,7 @@
             <End Role="NguoiDung" EntitySet="NguoiDung" />
             <End Role="HoatDongNguoiDung" EntitySet="HoatDongNguoiDung" />
           </AssociationSet>
-          <AssociationSet Name="FK__Likes__BaiVietID__76969D2E" Association="Self.FK__Likes__BaiVietID__76969D2E">
+          <AssociationSet Name="FK__Likes__BaiVietID__571DF1D5" Association="Self.FK__Likes__BaiVietID__571DF1D5">
             <End Role="BaiViet" EntitySet="BaiViet" />
             <End Role="Likes" EntitySet="Likes" />
           </AssociationSet>
@@ -355,6 +375,10 @@
             <End Role="NguoiDung" EntitySet="NguoiDung" />
             <End Role="Chat" EntitySet="Chat" />
           </AssociationSet>
+          <AssociationSet Name="FK_NguoiDung_VaiTro" Association="Self.FK_NguoiDung_VaiTro">
+            <End Role="VaiTro" EntitySet="VaiTro" />
+            <End Role="NguoiDung" EntitySet="NguoiDung" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
@@ -372,8 +396,8 @@
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="DanhMucID" Type="Int32" />
           <Property Name="HinhAnh" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Dislikes" Relationship="Self.FK__Dislikes__BaiVie__7A672E12" FromRole="BaiViet" ToRole="Dislikes" />
-          <NavigationProperty Name="Likes" Relationship="Self.FK__Likes__BaiVietID__76969D2E" FromRole="BaiViet" ToRole="Likes" />
+          <NavigationProperty Name="Dislikes" Relationship="Self.FK__Dislikes__BaiVie__534D60F1" FromRole="BaiViet" ToRole="Dislikes" />
+          <NavigationProperty Name="Likes" Relationship="Self.FK__Likes__BaiVietID__571DF1D5" FromRole="BaiViet" ToRole="Likes" />
           <NavigationProperty Name="DanhMuc" Relationship="Self.FK_BaiViet_DanhMuc" FromRole="BaiViet" ToRole="DanhMuc" />
           <NavigationProperty Name="NguoiDung" Relationship="Self.FK_BaiViet_NguoiDung" FromRole="BaiViet" ToRole="NguoiDung" />
           <NavigationProperty Name="BinhLuans" Relationship="Self.FK_BinhLuan_BaiViet" FromRole="BaiViet" ToRole="BinhLuan" />
@@ -424,7 +448,7 @@
           <Property Name="KhongThichID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="BaiVietID" Type="Int32" Nullable="false" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="BaiViet" Relationship="Self.FK__Dislikes__BaiVie__7A672E12" FromRole="Dislikes" ToRole="BaiViet" />
+          <NavigationProperty Name="BaiViet" Relationship="Self.FK__Dislikes__BaiVie__534D60F1" FromRole="Dislikes" ToRole="BaiViet" />
           <NavigationProperty Name="NguoiDung" Relationship="Self.FK__Dislikes__UserID__7B5B524B" FromRole="Dislikes" ToRole="NguoiDung" />
         </EntityType>
         <EntityType Name="HeThongCapDo">
@@ -442,7 +466,7 @@
           <Property Name="HoatDongID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TenHoatDong" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Diem" Type="Int32" />
-          <NavigationProperty Name="HoatDongNguoiDungs" Relationship="Self.FK__HoatDongN__HoatD__05D8E0BE" FromRole="HoatDong" ToRole="HoatDongNguoiDung" />
+          <NavigationProperty Name="HoatDongNguoiDungs" Relationship="Self.FK__HoatDongN__HoatD__5535A963" FromRole="HoatDong" ToRole="HoatDongNguoiDung" />
         </EntityType>
         <EntityType Name="HoatDongNguoiDung">
           <Key>
@@ -452,7 +476,7 @@
           <Property Name="UserID" Type="Int32" />
           <Property Name="HoatDongID" Type="Int32" />
           <Property Name="ThoiGian" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="HoatDong" Relationship="Self.FK__HoatDongN__HoatD__05D8E0BE" FromRole="HoatDongNguoiDung" ToRole="HoatDong" />
+          <NavigationProperty Name="HoatDong" Relationship="Self.FK__HoatDongN__HoatD__5535A963" FromRole="HoatDongNguoiDung" ToRole="HoatDong" />
           <NavigationProperty Name="NguoiDung" Relationship="Self.FK__HoatDongN__UserI__04E4BC85" FromRole="HoatDongNguoiDung" ToRole="NguoiDung" />
         </EntityType>
         <EntityType Name="Like">
@@ -462,7 +486,7 @@
           <Property Name="ThichID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="BaiVietID" Type="Int32" Nullable="false" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="BaiViet" Relationship="Self.FK__Likes__BaiVietID__76969D2E" FromRole="Likes" ToRole="BaiViet" />
+          <NavigationProperty Name="BaiViet" Relationship="Self.FK__Likes__BaiVietID__571DF1D5" FromRole="Likes" ToRole="BaiViet" />
           <NavigationProperty Name="NguoiDung" Relationship="Self.FK__Likes__UserID__778AC167" FromRole="Likes" ToRole="NguoiDung" />
         </EntityType>
         <EntityType Name="NguoiDung">
@@ -477,9 +501,9 @@
           <Property Name="Avatar" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="NgayDangKy" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="TrangThai" Type="Byte" Nullable="false" />
-          <Property Name="VaiTro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CapDo" Type="Int32" />
-          <Property Name="GioiTinh" Type="Int32" />
+          <Property Name="VaitroID" Type="Int32" Nullable="false" />
+          <Property Name="CapDo" Type="Int32" Nullable="false" />
+          <Property Name="GioiTinh" Type="Int32" Nullable="false" />
           <Property Name="Token" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="BaiViets" Relationship="Self.FK_BaiViet_NguoiDung" FromRole="NguoiDung" ToRole="BaiViet" />
           <NavigationProperty Name="BinhLuans" Relationship="Self.FK_BinhLuan_NguoiDung" FromRole="NguoiDung" ToRole="BinhLuan" />
@@ -488,6 +512,7 @@
           <NavigationProperty Name="Dislikes" Relationship="Self.FK__Dislikes__UserID__7B5B524B" FromRole="NguoiDung" ToRole="Dislikes" />
           <NavigationProperty Name="HoatDongNguoiDungs" Relationship="Self.FK__HoatDongN__UserI__04E4BC85" FromRole="NguoiDung" ToRole="HoatDongNguoiDung" />
           <NavigationProperty Name="Likes" Relationship="Self.FK__Likes__UserID__778AC167" FromRole="NguoiDung" ToRole="Likes" />
+          <NavigationProperty Name="VaiTro" Relationship="Self.FK_NguoiDung_VaiTro" FromRole="NguoiDung" ToRole="VaiTro" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -499,7 +524,15 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <Association Name="FK__Dislikes__BaiVie__7A672E12">
+        <EntityType Name="VaiTro">
+          <Key>
+            <PropertyRef Name="VaitroID" />
+          </Key>
+          <Property Name="VaitroID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenVaiTro" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NguoiDungs" Relationship="Self.FK_NguoiDung_VaiTro" FromRole="VaiTro" ToRole="NguoiDung" />
+        </EntityType>
+        <Association Name="FK__Dislikes__BaiVie__534D60F1">
           <End Role="BaiViet" Type="Self.BaiViet" Multiplicity="1" />
           <End Role="Dislikes" Type="Self.Dislike" Multiplicity="*" />
           <ReferentialConstraint>
@@ -511,7 +544,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Likes__BaiVietID__76969D2E">
+        <Association Name="FK__Likes__BaiVietID__571DF1D5">
           <End Role="BaiViet" Type="Self.BaiViet" Multiplicity="1" />
           <End Role="Likes" Type="Self.Like" Multiplicity="*" />
           <ReferentialConstraint>
@@ -607,7 +640,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__HoatDongN__HoatD__05D8E0BE">
+        <Association Name="FK__HoatDongN__HoatD__5535A963">
           <End Role="HoatDong" Type="Self.HoatDong" Multiplicity="0..1" />
           <End Role="HoatDongNguoiDung" Type="Self.HoatDongNguoiDung" Multiplicity="*" />
           <ReferentialConstraint>
@@ -643,6 +676,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_NguoiDung_VaiTro">
+          <End Role="VaiTro" Type="Self.VaiTro" Multiplicity="1" />
+          <End Role="NguoiDung" Type="Self.NguoiDung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VaiTro">
+              <PropertyRef Name="VaitroID" />
+            </Principal>
+            <Dependent Role="NguoiDung">
+              <PropertyRef Name="VaitroID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ForumTroChuyenEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="BaiViets" EntityType="Self.BaiViet" />
           <EntitySet Name="BinhLuans" EntityType="Self.BinhLuan" />
@@ -656,11 +701,12 @@
           <EntitySet Name="Likes" EntityType="Self.Like" />
           <EntitySet Name="NguoiDungs" EntityType="Self.NguoiDung" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-          <AssociationSet Name="FK__Dislikes__BaiVie__7A672E12" Association="Self.FK__Dislikes__BaiVie__7A672E12">
+          <EntitySet Name="VaiTroes" EntityType="Self.VaiTro" />
+          <AssociationSet Name="FK__Dislikes__BaiVie__534D60F1" Association="Self.FK__Dislikes__BaiVie__534D60F1">
             <End Role="BaiViet" EntitySet="BaiViets" />
             <End Role="Dislikes" EntitySet="Dislikes" />
           </AssociationSet>
-          <AssociationSet Name="FK__Likes__BaiVietID__76969D2E" Association="Self.FK__Likes__BaiVietID__76969D2E">
+          <AssociationSet Name="FK__Likes__BaiVietID__571DF1D5" Association="Self.FK__Likes__BaiVietID__571DF1D5">
             <End Role="BaiViet" EntitySet="BaiViets" />
             <End Role="Likes" EntitySet="Likes" />
           </AssociationSet>
@@ -692,7 +738,7 @@
             <End Role="NguoiDung" EntitySet="NguoiDungs" />
             <End Role="Dislikes" EntitySet="Dislikes" />
           </AssociationSet>
-          <AssociationSet Name="FK__HoatDongN__HoatD__05D8E0BE" Association="Self.FK__HoatDongN__HoatD__05D8E0BE">
+          <AssociationSet Name="FK__HoatDongN__HoatD__5535A963" Association="Self.FK__HoatDongN__HoatD__5535A963">
             <End Role="HoatDong" EntitySet="HoatDongs" />
             <End Role="HoatDongNguoiDung" EntitySet="HoatDongNguoiDungs" />
           </AssociationSet>
@@ -703,6 +749,10 @@
           <AssociationSet Name="FK__Likes__UserID__778AC167" Association="Self.FK__Likes__UserID__778AC167">
             <End Role="NguoiDung" EntitySet="NguoiDungs" />
             <End Role="Likes" EntitySet="Likes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NguoiDung_VaiTro" Association="Self.FK_NguoiDung_VaiTro">
+            <End Role="VaiTro" EntitySet="VaiTroes" />
+            <End Role="NguoiDung" EntitySet="NguoiDungs" />
           </AssociationSet>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -860,7 +910,7 @@
                 <ScalarProperty Name="Avatar" ColumnName="Avatar" />
                 <ScalarProperty Name="NgayDangKy" ColumnName="NgayDangKy" />
                 <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
-                <ScalarProperty Name="VaiTro" ColumnName="VaiTro" />
+                <ScalarProperty Name="VaitroID" ColumnName="VaitroID" />
                 <ScalarProperty Name="CapDo" ColumnName="CapDo" />
                 <ScalarProperty Name="GioiTinh" ColumnName="GioiTinh" />
                 <ScalarProperty Name="Token" ColumnName="Token" />
@@ -875,6 +925,14 @@
                 <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
                 <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VaiTroes">
+            <EntityTypeMapping TypeName="ForumTroChuyenModel.VaiTro">
+              <MappingFragment StoreEntitySet="VaiTro">
+                <ScalarProperty Name="VaitroID" ColumnName="VaitroID" />
+                <ScalarProperty Name="TenVaiTro" ColumnName="TenVaiTro" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

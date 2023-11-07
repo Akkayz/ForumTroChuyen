@@ -3,6 +3,8 @@ using System.IO;
 using System.Web.Mvc;
 using WebTroChuyen.Models;
 using System.Linq;
+using System.Web;
+using System.Text.RegularExpressions;
 
 namespace WebTroChuyen.Controllers
 {
@@ -17,76 +19,122 @@ namespace WebTroChuyen.Controllers
         }
 
         [HttpPost]
-        public ActionResult DangKy(FormCollection collection)
+        public ActionResult DangKy(NguoiDung model, HttpPostedFileBase AvatarFile, string ConfirmPassword)
         {
-            string tenNguoiDung = collection["TenNguoiDung"];
-            string userName = collection["UserName"];
-            string password = collection["Password"];
-            string email = collection["Email"];
-            string gioiTinh = collection["GioiTinh"];
-
-            if (string.IsNullOrEmpty(tenNguoiDung) || string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(gioiTinh))
+            if (ModelState.IsValid)
             {
-                ModelState.AddModelError("ThongBaoLoi", "Vui lòng điền đầy đủ thông tin.");
-                return View();
-            }
-
-            byte gioiTinhByte;
-            if (!byte.TryParse(gioiTinh, out gioiTinhByte) || (gioiTinhByte != 0 && gioiTinhByte != 1))
-            {
-                ModelState.AddModelError("GioiTinh", "Giới tính không hợp lệ. Vui lòng chọn 0 nếu là nam hoặc 1 nếu là nữ.");
-                return View();
-            }
-
-            string avatarFileName = ""; // Khai báo biến avatarFileName và gán giá trị mặc định
-
-            // Kiểm tra và xử lý tệp ảnh
-            if (Request.Files.Count > 0)
-            {
-                var file = Request.Files[0];
-                if (file != null && file.ContentLength > 0)
+                if (string.IsNullOrEmpty(model.TenNguoiDung))
                 {
-                    var fileName = Path.GetFileName(file.FileName);
+                    ModelState.AddModelError("TenNguoiDung", "Vui lòng nhập tên người dùng.");
+                    return View(model);
+                }
+                // Kiểm tra ô "Tên người dùng" (UserName) có được nhập hay không
+                if (string.IsNullOrEmpty(model.UserName))
+                {
+                    ModelState.AddModelError("UserName", "Vui lòng nhập tên tài khoản");
+                    return View(model);
+                }
+
+                // Kiểm tra ô "Email" có được nhập và có đúng định dạng email không
+                if (string.IsNullOrEmpty(model.Email) || !IsValidEmail(model.Email))
+                {
+                    ModelState.AddModelError("Email", "Vui lòng nhập một địa chỉ email hợp lệ.");
+                    return View(model);
+                }
+
+                // Kiểm tra ô "Mật khẩu" (Password) có được nhập hay không
+                if (string.IsNullOrEmpty(model.Password))
+                {
+                    ModelState.AddModelError("Password", "Vui lòng nhập mật khẩu.");
+                    return View(model);
+                }
+
+                // Kiểm tra ô "Xác nhận mật khẩu" (ConfirmPassword) có trùng khớp với mật khẩu hay không
+                if (model.Password != ConfirmPassword)
+                {
+                    ModelState.AddModelError("ConfirmPassword", "Xác nhận mật khẩu không khớp với mật khẩu.");
+                    return View(model);
+                }
+
+                // Kiểm tra ô "Ảnh đại diện" (AvatarFile) có được tải lên hay không
+                if (AvatarFile == null || AvatarFile.ContentLength == 0)
+                {
+                    ModelState.AddModelError("Avatar", "Vui lòng tải lên ảnh đại diện.");
+                    return View(model);
+                }
+
+                // Kiểm tra xem UserName đã tồn tại trong cơ sở dữ liệu hay chưa
+                bool userNameExists = db.NguoiDungs.Any(nguoiDung => nguoiDung.UserName == model.UserName);
+
+                if (userNameExists)
+                {
+                    ModelState.AddModelError("UserName", "Tên người dùng đã được sử dụng. Vui lòng chọn tên người dùng khác.");
+                    return View(model);
+                }
+
+                // Kiểm tra xem Email đã tồn tại trong cơ sở dữ liệu hay chưa
+                bool emailExists = db.NguoiDungs.Any(nguoiDung => nguoiDung.Email == model.Email);
+
+                if (emailExists)
+                {
+                    ModelState.AddModelError("Email", "Địa chỉ email đã được sử dụng. Vui lòng chọn địa chỉ email khác.");
+                    return View(model);
+                }
+
+                int gioiTinh = model.GioiTinh;
+
+                if (gioiTinh != 0 && gioiTinh != 1)
+                {
+                    ModelState.AddModelError("GioiTinh", "Giới tính không hợp lệ. Vui lòng chọn 0 nếu là nam hoặc 1 nếu là nữ.");
+                    return View(model);
+                }
+
+                string avatarFileName = model.Avatar; // Lấy tên tệp ảnh từ model
+
+                // Kiểm tra và xử lý tệp ảnh
+                if (AvatarFile != null && AvatarFile.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(AvatarFile.FileName);
 
                     // Gán tên tệp ảnh cho avatarFileName
                     avatarFileName = fileName;
 
                     // Lưu tệp ảnh vào thư mục lưu trữ (ví dụ: "~/Images/UserAvatar/")
                     var path = Path.Combine(Server.MapPath("~/Images/UserAvatar"), fileName);
-                    file.SaveAs(path);
+                    AvatarFile.SaveAs(path);
                 }
+
+                var ngayDangKy = DateTime.Now;
+                byte trangThai = 1; // Ép kiểu trangThai thành byte
+                int vaiTro = 1;   // Đặt giá trị mặc định cho VaiTro là 1
+                int capDo = 1;     // Đặt giá trị mặc định cho CapDo là 1
+
+                // Kiểm tra xem tệp ảnh đã tồn tại trong cơ sở dữ liệu hay chưa
+                bool avatarExistsInDB = db.NguoiDungs.Any(nguoiDung => nguoiDung.Avatar == avatarFileName);
+
+                if (avatarExistsInDB)
+                {
+                    ModelState.AddModelError("Avatar", "Tên tệp đã tồn tại trong cơ sở dữ liệu. Vui lòng chọn tên tệp khác hoặc đổi tên tệp.");
+                    return View(model);
+                }
+
+                // Cập nhật model với thông tin mới
+                model.Avatar = avatarFileName;
+                model.NgayDangKy = ngayDangKy;
+                model.TrangThai = trangThai;
+                model.VaitroID = vaiTro;
+                model.CapDo = capDo;
+                model.GioiTinh = gioiTinh; // Chuyển giới tính thành kiểu st
+
+                // Thêm dữ liệu vào cơ sở dữ liệu
+                db.NguoiDungs.Add(model);
+                db.SaveChanges();
+
+                // Điều hướng đến trang đăng nhập hoặc trang chính
+                return RedirectToAction("DangNhap", "Users");
             }
 
-            var ngayDangKy = DateTime.Now;
-            byte trangThai = 1; // Ép kiểu trangThai thành byte
-
-            // Kiểm tra xem tệp ảnh đã tồn tại trong cơ sở dữ liệu hay chưa
-            bool avatarExistsInDB = db.NguoiDungs.Any(nguoiDung => nguoiDung.Avatar == avatarFileName);
-
-            if (avatarExistsInDB)
-            {
-                ModelState.AddModelError("Avatar", "Tên tệp đã tồn tại trong cơ sở dữ liệu. Vui lòng chọn tên tệp khác hoặc đổi tên tệp.");
-                return View();
-            }
-
-            // Thêm dữ liệu vào cơ sở dữ liệu mà không sử dụng đối tượng model
-            var newUser = new NguoiDung
-            {
-                TenNguoiDung = tenNguoiDung,
-                UserName = userName,
-                Password = password,
-                Email = email,
-                GioiTinh = gioiTinhByte, // Sử dụng giá trị byte
-                Avatar = avatarFileName,
-                NgayDangKy = ngayDangKy,
-                TrangThai = trangThai
-            };
-
-            db.NguoiDungs.Add(newUser);
-            db.SaveChanges();
-
-            // Điều hướng đến trang đăng nhập hoặc trang chính
-            return RedirectToAction("DangNhap", "Users");
+            return View(model);
         }
 
         [HttpGet]
@@ -95,10 +143,34 @@ namespace WebTroChuyen.Controllers
             return View();
         }
 
-        private bool AvatarFileExists(string fileName)
+        [HttpPost]
+        public ActionResult DangNhap(NguoiDung model)
         {
-            var path = Path.Combine(Server.MapPath("~/Images/UserAvatar"), fileName);
-            return System.IO.File.Exists(path);
+            if (ModelState.IsValid)
+            {
+                // Kiểm tra xem UserName và Password có khớp với dữ liệu trong cơ sở dữ liệu hay không
+                var user = db.NguoiDungs.FirstOrDefault(u => u.UserName == model.UserName && u.Password == model.Password);
+
+                if (user != null)
+                {
+                    // Đăng nhập thành công, thực hiện các hành động cần thiết (ví dụ: lưu thông tin đăng nhập vào Session)
+                    // Sau đó điều hướng đến trang chính hoặc trang khác
+                    return RedirectToAction("Index", "DangBai");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Tên đăng nhập hoặc mật khẩu không đúng.");
+                }
+            }
+
+            return View(model);
+        }
+
+        private bool IsValidEmail(string email)
+        {
+            string pattern = @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$";
+            Match match = Regex.Match(email, pattern);
+            return match.Success;
         }
     }
 }

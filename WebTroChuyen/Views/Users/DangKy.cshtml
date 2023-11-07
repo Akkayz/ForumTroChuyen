@@ -1,4 +1,5 @@
-﻿@{
+﻿@model WebTroChuyen.Models.NguoiDung
+@{
     ViewBag.Title = "DangKy";
     Layout = "~/Views/Shared/_LayoutTrangChu.cshtml";
 }
@@ -14,27 +15,33 @@
                         @Html.AntiForgeryToken()
                         <div class="mb-3">
                             <p>Tên người dùng</p>
-                            <input type="text" name="TenNguoiDung" class="form-control" placeholder="Tên người dùng" required="required" />
-                            @Html.ValidationMessage("TenNguoiDung", "", new { @class = "text-danger" })
+                            @Html.TextBoxFor(m => m.TenNguoiDung, new { @class = "form-control", placeholder = "Tên người dùng" })
+                            @Html.ValidationMessageFor(m => m.TenNguoiDung, "", new { @class = "text-danger" })
                         </div>
                         <div class="mb-3">
-                            <p>User Name</p>
-                            <input type="text" name="UserName" class="form-control" placeholder="Tài Khoản" required="required" />
-                            @Html.ValidationMessage("UserName", "", new { @class = "text-danger" })
+                            <p>Tài khoản</p>
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "Tài Khoản" })
+                            @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
                         </div>
                         <div class="mb-3">
-                            <p>Password</p>
-                            <input type="password" name="Password" class="form-control" placeholder="Mật khẩu" required="required" />
-                            @Html.ValidationMessage("Password", "", new { @class = "text-danger" })
+                            <p>Mật khẩu</p>
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Mật khẩu" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="mb-3">
+                            <p>Xác nhận mật khẩu</p>
+                            @Html.Password("ConfirmPassword", null, new { @class = "form-control", placeholder = "Xác nhận mật khẩu" })
+                            @Html.ValidationMessage("ConfirmPassword", "", new { @class = "text-danger" })
                         </div>
                         <div class="mb-3">
                             <p>Email</p>
-                            <input type="text" name="Email" class ="form-control" placeholder="Email" required="required" />
-                            @Html.ValidationMessage("Email", "", new { @class = "text-danger" })
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                         </div>
                         <div class="mb-3">
                             <p>Avatar</p>
-                            <input type="file" class="form-control" id="Avatar" name="Avatar" accept="image/*" />
+                            <input type="file" class="form-control" id="AvatarFile" name="AvatarFile" accept="image/*" />
+                            @Html.ValidationMessage("Avatar", "", new { @class = "text-danger" }) <!-- Thêm thông báo lỗi cho Avatar -->
                         </div>
                         <!-- Hiển thị hình ảnh đã tải lên bên dưới phần Avatar -->
                         <div class="mb-3">
@@ -43,12 +50,15 @@
                         </div>
                         <div class="mb-3">
                             <p>Giới tính</p>
-                            <select name="GioiTinh" class="form-control">
-                                <option value="0">Nam</option>
-                                <option value="1">Nữ</option>
-                            </select>
-                            @Html.ValidationMessage("GioiTinh", "", new { @class = "text-danger" })
+                            <label>
+                                @Html.RadioButtonFor(m => m.GioiTinh, "0") Nam <!-- Sử dụng RadioButtonFor để liên kết giới tính với model -->
+                            </label>
+                            <label>
+                                @Html.RadioButtonFor(m => m.GioiTinh, "1") Nữ <!-- Sử dụng RadioButtonFor để liên kết giới tính với model -->
+                            </label>
+                            @Html.ValidationMessageFor(m => m.GioiTinh, "", new { @class = "text-danger" }) <!-- Thêm thông báo lỗi cho GioiTinh -->
                         </div>
+
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary btn-lg w-100">Đăng ký</button>
                         </div>
@@ -61,7 +71,7 @@
 
 <!-- JavaScript để hiển thị hình ảnh đã tải lên -->
 <script>
-    document.getElementById('Avatar').addEventListener('change', function (e) {
+    document.getElementById('AvatarFile').addEventListener('change', function (e) {
         var preview = document.getElementById('AvatarPreview');
         preview.src = URL.createObjectURL(e.target.files[0]);
     });
