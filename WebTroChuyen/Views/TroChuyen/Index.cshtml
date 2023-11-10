@@ -1,4 +1,5 @@
 ﻿@model List<WebTroChuyen.Models.Chat>
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutTrangChu.cshtml";
@@ -12,7 +13,7 @@
             <div class="row mt-2 h-100 align-items-center">
                 <div class="col-md-4">
                     <div class="account-frame d-flex" style="max-height: 40px;">
-                        <img src="~/Images/UserAvatar/3.jpg" width="40" height="40" alt="Avatar" class="avatar me-3">
+                        <img src="~/Images/UserAvatar/@message.NguoiDung.Avatar" width="40" height="40" alt="Avatar" class="avatar me-3">
                         <div class="user-info">
                             <h6 class="mb-0">@message.NguoiDung.TenNguoiDung</h6>
                             <span class="timestamp">@CalculateTimeDifference(message.ThoiGianGui)</span>
@@ -30,8 +31,8 @@
         }
     </div>
     <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Nhập tin nhắn">
-        <button class="btn btn-primary" type="button">Gửi</button>
+        <input type="text" class="form-control" placeholder="Nhập tin nhắn" id="txtMessage">
+        <button class="btn btn-primary" type="button" id="btnSendMessage">Gửi</button>
     </div>
 </div>
 
@@ -55,6 +56,48 @@
     else
     {
         var days = (int)timeDifference.TotalDays;
-        @("Cách đây " + days + " ngày " +"trước" )
+        @("Cách đây " + days + " ngày " + "trước")
     }
+}
+@section scripts {
+
+    <script>
+        $(function () {
+            // Reference the auto-generated proxy for the hub.
+            var chat = $.connection.chatHub;
+
+            // Create a function that the hub can call back to display messages.
+            chat.client.addNewMessageToPage = function (name, message) {
+                // Add the message to the page.
+                $('.user-chat').append('<div class="row mt-2 h-100 align-items-center">' +
+                    '<div class="col-md-4">' +
+                    '<div class="account-frame d-flex" style="max-height: 40px;">' +
+                    '<img src="~/Images/UserAvatar/@Session["Avatar"]" width="40" height="40" alt="Avatar" class="avatar me-3">' +
+                    '<div class="user-info">' +
+                    '<h6 class="mb-0">' + name + '</h6>' +
+                    '<span class="timestamp">Vừa xong</span>' +
+                    '<i class="fas fa-share"></i>' +
+                    '</div>' +
+                    '<span class="user-level d-flex align-items-center justify-content-center rounded bg-primary text-white" style="width: 60px; height: 30px;">Cấp @Session["CapDo"]</span>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="col-md-8">' +
+                    '<div class="chat-content" style="max-width: 100%; word-wrap: break-word;">' +
+                    '<p>' + message + '</p>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>');
+            };
+
+            // Start the connection.
+            $.connection.hub.start().done(function () {
+                $('#btnSendMessage').click(function () {
+                    // Call the Send method on the hub.
+                    chat.server.send('@Session["UserName"]', $('#txtMessage').val());
+                    // Clear text box and reset focus for the next comment.
+                    $('#txtMessage').val('').focus();
+                });
+            });
+        });
+    </script>
 }

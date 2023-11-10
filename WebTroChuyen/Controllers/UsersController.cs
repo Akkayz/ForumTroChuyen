@@ -5,6 +5,7 @@ using WebTroChuyen.Models;
 using System.Linq;
 using System.Web;
 using System.Text.RegularExpressions;
+using System.Security.Principal;
 
 namespace WebTroChuyen.Controllers
 {
@@ -154,6 +155,11 @@ namespace WebTroChuyen.Controllers
                 {
                     Session["UserName"] = user.UserName;
                     Session["Avatar"] = user.Avatar;
+                    Session["CapDo"] = user.CapDo;
+
+                    // Lưu thông tin người dùng vào Context.User.Identity.Name
+                    System.Web.HttpContext.Current.User = new GenericPrincipal(new GenericIdentity(user.UserName), null);
+
                     return RedirectToAction("Index", "DangBai");
                 }
                 else
