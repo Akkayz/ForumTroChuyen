@@ -307,7 +307,6 @@ const getNextActiveElement = (list, activeElement, shouldGetNext, isCycleAllowed
  * --------------------------------------------------------------------------
  */
 
-
 /**
  * Constants
  */
@@ -586,7 +585,6 @@ const Manipulator = {
  * --------------------------------------------------------------------------
  */
 
-
 /**
  * Class definition
  */
@@ -638,7 +636,6 @@ class Config {
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  * --------------------------------------------------------------------------
  */
-
 
 /**
  * Constants
@@ -822,7 +819,6 @@ const enableDismissTrigger = (component, method = 'hide') => {
  * --------------------------------------------------------------------------
  */
 
-
 /**
  * Constants
  */
@@ -897,7 +893,6 @@ defineJQueryPlugin(Alert);
  * --------------------------------------------------------------------------
  */
 
-
 /**
  * Constants
  */
@@ -960,7 +955,6 @@ defineJQueryPlugin(Button);
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  * --------------------------------------------------------------------------
  */
-
 
 /**
  * Constants
@@ -1080,7 +1074,6 @@ class Swipe extends Config {
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  * --------------------------------------------------------------------------
  */
-
 
 /**
  * Constants
@@ -1454,7 +1447,6 @@ defineJQueryPlugin(Carousel);
  * --------------------------------------------------------------------------
  */
 
-
 /**
  * Constants
  */
@@ -1687,7 +1679,6 @@ defineJQueryPlugin(Collapse);
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  * --------------------------------------------------------------------------
  */
-
 
 /**
  * Constants
@@ -2056,7 +2047,6 @@ defineJQueryPlugin(Dropdown);
  * --------------------------------------------------------------------------
  */
 
-
 /**
  * Constants
  */
@@ -2181,7 +2171,6 @@ class Backdrop extends Config {
  * --------------------------------------------------------------------------
  */
 
-
 /**
  * Constants
  */
@@ -2280,7 +2269,6 @@ class FocusTrap extends Config {
  * --------------------------------------------------------------------------
  */
 
-
 /**
  * Constants
  */
@@ -2377,7 +2365,6 @@ class ScrollBarHelper {
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  * --------------------------------------------------------------------------
  */
-
 
 /**
  * Constants
@@ -2682,7 +2669,6 @@ defineJQueryPlugin(Modal);
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  * --------------------------------------------------------------------------
  */
-
 
 /**
  * Constants
@@ -3007,7 +2993,6 @@ function sanitizeHtml(unsafeHtml, allowList, sanitizeFunction) {
  * --------------------------------------------------------------------------
  */
 
-
 /**
  * Constants
  */
@@ -3142,7 +3127,6 @@ class TemplateFactory extends Config {
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  * --------------------------------------------------------------------------
  */
-
 
 /**
  * Constants
@@ -3655,7 +3639,6 @@ defineJQueryPlugin(Tooltip);
  * --------------------------------------------------------------------------
  */
 
-
 /**
  * Constants
  */
@@ -3735,7 +3718,6 @@ defineJQueryPlugin(Popover);
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  * --------------------------------------------------------------------------
  */
-
 
 /**
  * Constants
@@ -3995,7 +3977,6 @@ defineJQueryPlugin(ScrollSpy);
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  * --------------------------------------------------------------------------
  */
-
 
 /**
  * Constants
@@ -4265,7 +4246,6 @@ defineJQueryPlugin(Tab);
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  * --------------------------------------------------------------------------
  */
-
 
 /**
  * Constants

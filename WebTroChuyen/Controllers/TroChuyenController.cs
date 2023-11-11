@@ -1,6 +1,6 @@
-﻿using System.Linq;
+﻿using System.Data.Entity; // Thêm using này để sử dụng Include
+using System.Linq;
 using System.Web.Mvc;
-using System.Data.Entity; // Thêm using này để sử dụng Include
 using WebTroChuyen.Models;
 
 namespace WebTroChuyen.Controllers
@@ -11,8 +11,8 @@ namespace WebTroChuyen.Controllers
 
         public ActionResult Index()
         {
-            var messages = db.Chats.Include("NguoiDung").OrderByDescending(chat => chat.ThoiGianGui).Take(10).ToList();
-
+            var messages = db.Chats.Include("NguoiDung").OrderByDescending(chat => chat.ThoiGianGui).Take(15).ToList();
+            messages.Reverse();
             return View(messages);
         }
     }

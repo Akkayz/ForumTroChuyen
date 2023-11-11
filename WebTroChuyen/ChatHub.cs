@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNet.SignalR;
-using System.Threading.Tasks;
-using WebTroChuyen.Models; // Import namespace cho model Chat
 using System;
 using System.Linq;
+using System.Threading.Tasks;
+using WebTroChuyen.Models; // Import namespace cho model Chat
 
 namespace WebTroChuyen
 {
@@ -12,26 +12,25 @@ namespace WebTroChuyen
 
         public async Task Send(string tenUser, string tinNhan)
         {
-            int userId = GetUserIdByName(tenUser);
+            var user = GetUserByName(tenUser);
 
             var chatMessage = new Chat
             {
-                UserID = userId,
+                UserID = user.UserID,
                 TinNhan = tinNhan,
                 ThoiGianGui = DateTime.Now
             };
 
-            db.Chats.Add(chatMessage); // Thêm tin nhắn vào DbSet
-            await db.SaveChangesAsync(); // Sử dụng await cho hoạt động IO
+            db.Chats.Add(chatMessage);
+            await db.SaveChangesAsync();
 
-            // Gửi tin nhắn đến tất cả các client khác
-            Clients.All.addNewMessageToPage(tenUser, tinNhan);
+            // Truyền thông tin người dùng khi gửi tin nhắn
+            Clients.All.addNewMessageToPage(tenUser, tinNhan, user.TenNguoiDung, user.Avatar, user.CapDo);
         }
 
-        private int GetUserIdByName(string tenUser)
+        private NguoiDung GetUserByName(string tenUser)
         {
-            var user = db.NguoiDungs.FirstOrDefault(u => u.UserName == tenUser);
-            return user != null ? user.UserID : 0;
+            return db.NguoiDungs.FirstOrDefault(u => u.UserName == tenUser);
         }
     }
 }

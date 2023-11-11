@@ -67,26 +67,28 @@
             var chat = $.connection.chatHub;
 
             // Create a function that the hub can call back to display messages.
-            chat.client.addNewMessageToPage = function (name, message) {
+            chat.client.addNewMessageToPage = function (name, message, tenNguoiDung, avatar, capDo) {
                 // Add the message to the page.
                 $('.user-chat').append('<div class="row mt-2 h-100 align-items-center">' +
-                    '<div class="col-md-4">' +
-                    '<div class="account-frame d-flex" style="max-height: 40px;">' +
-                    '<img src="~/Images/UserAvatar/@Session["Avatar"]" width="40" height="40" alt="Avatar" class="avatar me-3">' +
-                    '<div class="user-info">' +
-                    '<h6 class="mb-0">' + name + '</h6>' +
-                    '<span class="timestamp">Vừa xong</span>' +
-                    '<i class="fas fa-share"></i>' +
-                    '</div>' +
-                    '<span class="user-level d-flex align-items-center justify-content-center rounded bg-primary text-white" style="width: 60px; height: 30px;">Cấp @Session["CapDo"]</span>' +
-                    '</div>' +
-                    '</div>' +
-                    '<div class="col-md-8">' +
-                    '<div class="chat-content" style="max-width: 100%; word-wrap: break-word;">' +
-                    '<p>' + message + '</p>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>');
+                '<div class="col-md-4">' +
+                '<div class="account-frame d-flex" style="max-height: 40px;">' +
+                '<img src="./Images/UserAvatar/' + avatar + '" width="40" height="40" alt="Avatar" class="avatar me-3">' +
+                '<div class="user-info">' +
+                '<h6 class="mb-0">' + tenNguoiDung + '</h6>' +
+                '<span class="timestamp">Vừa xong</span>' +
+                '<i class="fas fa-share"></i>' +
+                '</div>' +
+                '<span class="user-level d-flex align-items-center justify-content-center rounded bg-primary text-white" style="width: 60px; height: 30px;">Cấp ' + capDo + '</span>' +
+                '</div>' +
+                '</div>' +
+                '<div class="col-md-8">' +
+                '<div class="chat-content" style="max-width: 100%; word-wrap: break-word;">' +
+                '<p>' + message + '</p>' +
+                '</div>' +
+                '</div>' +
+                '</div>');
+                var chatContainer = $('.user-chat');
+                chatContainer.scrollTop(chatContainer.prop("scrollHeight"));
             };
 
             // Start the connection.
@@ -97,6 +99,8 @@
                     // Clear text box and reset focus for the next comment.
                     $('#txtMessage').val('').focus();
                 });
+                var chatContainer = $('.user-chat');
+                chatContainer.scrollTop(chatContainer.prop("scrollHeight"));
             });
         });
     </script>

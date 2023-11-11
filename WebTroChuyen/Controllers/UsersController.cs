@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
+using System.Security.Principal;
+using System.Text.RegularExpressions;
+using System.Web;
 using System.Web.Mvc;
 using WebTroChuyen.Models;
-using System.Linq;
-using System.Web;
-using System.Text.RegularExpressions;
-using System.Security.Principal;
 
 namespace WebTroChuyen.Controllers
 {
@@ -154,6 +154,7 @@ namespace WebTroChuyen.Controllers
                 if (user != null)
                 {
                     Session["UserName"] = user.UserName;
+                    Session["TenNguoiDung"] = user.TenNguoiDung;
                     Session["Avatar"] = user.Avatar;
                     Session["CapDo"] = user.CapDo;
 
@@ -174,8 +175,7 @@ namespace WebTroChuyen.Controllers
         public ActionResult Logout()
         {
             // Xóa thông tin đăng nhập khỏi Session
-            Session.Remove("UserName");
-            Session.Remove("Avatar");
+            Session.RemoveAll();
 
             // Điều hướng người dùng đến trang chính hoặc bất kỳ trang nào bạn muốn
             return RedirectToAction("Index", "DangBai"); // Ví dụ: điều hướng đến trang chính của ứng dụng
