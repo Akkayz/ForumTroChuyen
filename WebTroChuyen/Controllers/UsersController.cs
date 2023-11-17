@@ -153,6 +153,7 @@ namespace WebTroChuyen.Controllers
 
                 if (user != null)
                 {
+                    Session["UserID"] = user.UserID;
                     Session["UserName"] = user.UserName;
                     Session["TenNguoiDung"] = user.TenNguoiDung;
                     Session["Avatar"] = user.Avatar;
@@ -161,7 +162,7 @@ namespace WebTroChuyen.Controllers
                     // Lưu thông tin người dùng vào Context.User.Identity.Name
                     System.Web.HttpContext.Current.User = new GenericPrincipal(new GenericIdentity(user.UserName), null);
 
-                    return RedirectToAction("Index", "DangBai");
+                    return RedirectToAction("BaiViet", "BaiViet");
                 }
                 else
                 {

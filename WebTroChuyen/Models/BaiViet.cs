@@ -27,8 +27,9 @@ namespace WebTroChuyen.Models
         public string NoiDung { get; set; }
         public System.DateTime NgayDang { get; set; }
         public int UserID { get; set; }
-        public Nullable<int> DanhMucID { get; set; }
+        public int DanhMucID { get; set; }
         public string HinhAnh { get; set; }
+        public bool TrangThai { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Dislike> Dislikes { get; set; }

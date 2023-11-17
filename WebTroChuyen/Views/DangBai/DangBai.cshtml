@@ -1,0 +1,73 @@
+﻿@model WebTroChuyen.Models.BaiViet
+@{
+    ViewBag.Title = "DangBai";
+    Layout = "~/Views/Shared/_LayoutTrangChu.cshtml";
+}
+
+<div class="container bg-white" style="max-width: 1000px; min-height: 700px;">
+    <h5 class="mt-4">Đăng Bài Mới</h5>
+    <div class="row mt-4">
+        <!-- Cột 1: Form đăng bài -->
+        <div class="col-md-6">
+            @using (Html.BeginForm("DangBai", "DangBai", FormMethod.Post, new { enctype = "multipart/form-data", id = "dangBaiForm" }))
+            {
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" }) <!-- Thêm dòng này -->
+
+                <div class="mb-3">
+                    <label for="TieuDe" class="form-label">Tiêu Đề:</label>
+                    @Html.TextBoxFor(model => model.TieuDe, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.TieuDe, "", new { @class = "text-danger" }) <!-- Thêm dòng này -->
+                </div>
+
+                <div class="mb-3">
+                    <label for="DanhMucID" class="form-label">Danh Mục:</label>
+                    @Html.DropDownListFor(model => model.DanhMucID, (SelectList)ViewBag.DanhMucList, "Chọn danh mục", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.DanhMucID, "", new { @class = "text-danger" }) <!-- Thêm dòng này -->
+                </div>
+
+                <!-- Các trường khác trong form -->
+
+                <div class="mb-3">
+                    <label for="HinhAnh" class="form-label">Hình Ảnh:</label>
+                    <input type="file" name="file" id="fileInput" class="form-control" onchange="previewImage();" />
+                    <br />
+                    <img id="preview" src="#" alt="Hình Ảnh" style="max-width: 100%; display: none;" />
+                    @Html.ValidationMessageFor(model => model.HinhAnh, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Các trường khác trong form -->
+
+                <div class="mb-3">
+                    <label for="NoiDung" class="form-label">Nội Dung:</label>
+                    @Html.TextAreaFor(model => model.NoiDung, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.NoiDung, "", new { @class = "text-danger" }) <!-- Thêm dòng này -->
+                </div>
+
+                <div class="mb-3">
+                    <input type="submit" value="Gửi" class="btn btn-primary" />
+                </div>
+            }
+        </div>
+
+        <!-- Cột 2: Quy định đăng bài -->
+        <div class="col-md-6">
+            <h5>Quy định đăng bài</h5>
+            <p>1. Không đăng bài liên quan chính trị, tôn giáo, phản động</p>
+            <p>2. Tiêu đề tiếng Việt phải có dấu.</p>
+            <p>3. Hãy đặt tiêu đề và mô tả một cách sáng tạo. Tránh đặt kiểu như: "hay vãi", "chuẩn", ":))"...</p>
+            <p>4. Không spam, PR, quảng cáo, câu like.</p>
+            <p>5. Không đăng bài tự sướng, dìm hàng</p>
+            <p>6. Không đăng bài trái với thuần phong mỹ tục, đồi trụy</p>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        document.getElementById('fileInput').addEventListener('change', function (e) {
+            var preview = document.getElementById('preview');
+            preview.src = URL.createObjectURL(e.target.files[0]);
+            preview.style.display = 'block';
+        });
+    </script>
+}
