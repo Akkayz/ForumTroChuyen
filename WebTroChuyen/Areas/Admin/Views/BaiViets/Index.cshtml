@@ -1,0 +1,73 @@
+﻿@model IEnumerable<WebTroChuyen.Models.BaiViet>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-3">
+    <h2>Quản lý bài viết</h2>
+    <form method="get" action="@Url.Action("Index", "BaiViets", new { area = "Admin" })">
+        <div class="mb-3">
+            <label for="trangThai" class="form-label">Lọc theo trạng thái:</label>
+            <select class="form-select" id="trangThai" name="trangThai">
+                <option value="">Tất cả</option>
+                <option value="baivietchuaduyet">Chưa duyệt</option>
+                <option value="baivietdaduyet">Đã duyệt</option>
+                <!-- Thêm các trạng thái khác nếu cần -->
+            </select>
+            <button type="submit" class="btn btn-primary">Lọc</button>
+        </div>
+    </form>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Tiêu đề</th>
+                    <th scope="col">Nội dung</th>
+                    <th scope="col">Ngày đăng</th>
+                    <th scope="col">Hình ảnh</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col">Danh mục</th>
+                    <th scope="col">Người đăng</th>
+                    <th scope="col">Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.TieuDe)</td>
+                        <td style="max-width: 400px;">
+                            <div class="d-block position-relative" style="word-wrap: break-word; max-height: 100px; overflow: hidden;">
+                                @Html.DisplayFor(modelItem => item.NoiDung)
+                                @if (item.NoiDung.Length > 200)
+                                {
+                                    <div class="position-absolute bottom-0 end-0 p-1 bg-white" style="pointer-events: none;">...</div>
+                                }
+                            </div>
+                        </td>
+
+                        <td>@Html.DisplayFor(modelItem => item.NgayDang)</td>
+                        <td>@Html.DisplayFor(modelItem => item.HinhAnh)</td>
+                        <td>@Html.DisplayFor(modelItem => item.TrangThai)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DanhMuc.TenDanhMuc)</td>
+                        <td>@Html.DisplayFor(modelItem => item.NguoiDung.TenNguoiDung)</td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Hành động
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Chỉnh sửa", "Edit", new { id = item.BaiVietID }, new { @class = "dropdown-item" })</li>
+                                    <li>@Html.ActionLink("Chi tiết", "Details", new { id = item.BaiVietID }, new { @class = "dropdown-item" })</li>
+                                    <li>@Html.ActionLink("Xóa", "Delete", new { id = item.BaiVietID }, new { @class = "dropdown-item" })</li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

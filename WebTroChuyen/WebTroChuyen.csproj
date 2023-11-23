@@ -138,6 +138,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\BaiVietsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeControllerController.cs" />
     <Compile Include="ChatHub.cs" />
     <Compile Include="Controllers\BaiVietController.cs" />
     <Compile Include="Controllers\DangBaiController.cs" />
@@ -306,6 +309,14 @@
     <Content Include="Models\DbForumTroChuyen.edmx.diagram">
       <DependentUpon>DbForumTroChuyen.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Areas\Admin\Views\BaiViets\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\BaiViets\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\BaiViets\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\BaiViets\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\BaiViets\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeController\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
@@ -338,6 +349,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Data\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
