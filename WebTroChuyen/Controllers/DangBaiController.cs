@@ -9,7 +9,7 @@ namespace WebTroChuyen.Controllers
 {
     public class DangBaiController : Controller
     {
-        private ForumTroChuyenEntities db = new ForumTroChuyenEntities();
+        private readonly ForumTroChuyenEntities db = new ForumTroChuyenEntities();
 
         // GET: BaiViet/DangBai
         public ActionResult DangBai()

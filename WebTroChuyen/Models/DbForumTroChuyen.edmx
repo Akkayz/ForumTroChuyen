@@ -4,18 +4,18 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ForumTroChuyenModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ForumTroChuyenModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BaiViet">
           <Key>
             <PropertyRef Name="BaiVietID" />
           </Key>
           <Property Name="BaiVietID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TieuDe" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="NoiDung" Type="text" Nullable="false" />
+          <Property Name="TieuDe" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="NoiDung" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="NgayDang" Type="datetime" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="DanhMucID" Type="int" Nullable="false" />
-          <Property Name="HinhAnh" Type="varchar" MaxLength="255" />
+          <Property Name="HinhAnh" Type="nvarchar" MaxLength="255" />
           <Property Name="TrangThai" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="BinhLuan">
@@ -109,6 +109,16 @@
           <Property Name="CapDo" Type="int" Nullable="false" />
           <Property Name="GioiTinh" Type="int" Nullable="false" />
           <Property Name="Token" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="VaiTro">
           <Key>
@@ -316,6 +326,7 @@
           <EntitySet Name="HoatDongNguoiDung" EntityType="Self.HoatDongNguoiDung" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Likes" EntityType="Self.Likes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NguoiDung" EntityType="Self.NguoiDung" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VaiTro" EntityType="Self.VaiTro" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__DiemSoNgu__UserI__7E37BEF6" Association="Self.FK__DiemSoNgu__UserI__7E37BEF6">
             <End Role="NguoiDung" EntitySet="NguoiDung" />
@@ -370,370 +381,11 @@
             <End Role="NguoiDung" EntitySet="NguoiDung" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ForumTroChuyenModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="BaiViet">
-          <Key>
-            <PropertyRef Name="BaiVietID" />
-          </Key>
-          <Property Name="BaiVietID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TieuDe" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="NoiDung" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="NgayDang" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="DanhMucID" Type="Int32" Nullable="false" />
-          <Property Name="HinhAnh" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="TrangThai" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Dislikes" Relationship="Self.FK__Dislikes__BaiVie__534D60F1" FromRole="BaiViet" ToRole="Dislikes" />
-          <NavigationProperty Name="Likes" Relationship="Self.FK__Likes__BaiVietID__571DF1D5" FromRole="BaiViet" ToRole="Likes" />
-          <NavigationProperty Name="DanhMuc" Relationship="Self.FK_BaiViet_DanhMuc" FromRole="BaiViet" ToRole="DanhMuc" />
-          <NavigationProperty Name="NguoiDung" Relationship="Self.FK_BaiViet_NguoiDung" FromRole="BaiViet" ToRole="NguoiDung" />
-          <NavigationProperty Name="BinhLuans" Relationship="Self.FK_BinhLuan_BaiViet" FromRole="BaiViet" ToRole="BinhLuan" />
-        </EntityType>
-        <EntityType Name="BinhLuan">
-          <Key>
-            <PropertyRef Name="BinhLuanID" />
-          </Key>
-          <Property Name="BinhLuanID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BaiVietID" Type="Int32" Nullable="false" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="NoiDung" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="NgayBinhLuan" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="BaiViet" Relationship="Self.FK_BinhLuan_BaiViet" FromRole="BinhLuan" ToRole="BaiViet" />
-          <NavigationProperty Name="NguoiDung" Relationship="Self.FK_BinhLuan_NguoiDung" FromRole="BinhLuan" ToRole="NguoiDung" />
-        </EntityType>
-        <EntityType Name="Chat">
-          <Key>
-            <PropertyRef Name="MaChat" />
-          </Key>
-          <Property Name="MaChat" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="TinNhan" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ThoiGianGui" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="NguoiDung" Relationship="Self.FK_Chat_NguoiDung" FromRole="Chat" ToRole="NguoiDung" />
-        </EntityType>
-        <EntityType Name="DanhMuc">
-          <Key>
-            <PropertyRef Name="DanhMucID" />
-          </Key>
-          <Property Name="DanhMucID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TenDanhMuc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="BaiViets" Relationship="Self.FK_BaiViet_DanhMuc" FromRole="DanhMuc" ToRole="BaiViet" />
-        </EntityType>
-        <EntityType Name="DiemSoNguoiDung">
-          <Key>
-            <PropertyRef Name="DiemSoID" />
-          </Key>
-          <Property Name="DiemSoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserID" Type="Int32" />
-          <Property Name="DiemSo" Type="Int32" />
-          <NavigationProperty Name="NguoiDung" Relationship="Self.FK__DiemSoNgu__UserI__7E37BEF6" FromRole="DiemSoNguoiDung" ToRole="NguoiDung" />
-        </EntityType>
-        <EntityType Name="Dislike">
-          <Key>
-            <PropertyRef Name="KhongThichID" />
-          </Key>
-          <Property Name="KhongThichID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BaiVietID" Type="Int32" Nullable="false" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="BaiViet" Relationship="Self.FK__Dislikes__BaiVie__534D60F1" FromRole="Dislikes" ToRole="BaiViet" />
-          <NavigationProperty Name="NguoiDung" Relationship="Self.FK__Dislikes__UserID__7B5B524B" FromRole="Dislikes" ToRole="NguoiDung" />
-        </EntityType>
-        <EntityType Name="HeThongCapDo">
-          <Key>
-            <PropertyRef Name="CapDoID" />
-          </Key>
-          <Property Name="CapDoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TenCapDo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="DiemToiThieu" Type="Int32" />
-        </EntityType>
-        <EntityType Name="HoatDong">
-          <Key>
-            <PropertyRef Name="HoatDongID" />
-          </Key>
-          <Property Name="HoatDongID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TenHoatDong" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Diem" Type="Int32" />
-          <NavigationProperty Name="HoatDongNguoiDungs" Relationship="Self.FK__HoatDongN__HoatD__5535A963" FromRole="HoatDong" ToRole="HoatDongNguoiDung" />
-        </EntityType>
-        <EntityType Name="HoatDongNguoiDung">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserID" Type="Int32" />
-          <Property Name="HoatDongID" Type="Int32" />
-          <Property Name="ThoiGian" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="HoatDong" Relationship="Self.FK__HoatDongN__HoatD__5535A963" FromRole="HoatDongNguoiDung" ToRole="HoatDong" />
-          <NavigationProperty Name="NguoiDung" Relationship="Self.FK__HoatDongN__UserI__04E4BC85" FromRole="HoatDongNguoiDung" ToRole="NguoiDung" />
-        </EntityType>
-        <EntityType Name="Like">
-          <Key>
-            <PropertyRef Name="ThichID" />
-          </Key>
-          <Property Name="ThichID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BaiVietID" Type="Int32" Nullable="false" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="BaiViet" Relationship="Self.FK__Likes__BaiVietID__571DF1D5" FromRole="Likes" ToRole="BaiViet" />
-          <NavigationProperty Name="NguoiDung" Relationship="Self.FK__Likes__UserID__778AC167" FromRole="Likes" ToRole="NguoiDung" />
-        </EntityType>
-        <EntityType Name="NguoiDung">
-          <Key>
-            <PropertyRef Name="UserID" />
-          </Key>
-          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TenNguoiDung" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="UserName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Avatar" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="NgayDangKy" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="TrangThai" Type="Byte" Nullable="false" />
-          <Property Name="VaitroID" Type="Int32" Nullable="false" />
-          <Property Name="CapDo" Type="Int32" Nullable="false" />
-          <Property Name="GioiTinh" Type="Int32" Nullable="false" />
-          <Property Name="Token" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="BaiViets" Relationship="Self.FK_BaiViet_NguoiDung" FromRole="NguoiDung" ToRole="BaiViet" />
-          <NavigationProperty Name="BinhLuans" Relationship="Self.FK_BinhLuan_NguoiDung" FromRole="NguoiDung" ToRole="BinhLuan" />
-          <NavigationProperty Name="Chats" Relationship="Self.FK_Chat_NguoiDung" FromRole="NguoiDung" ToRole="Chat" />
-          <NavigationProperty Name="DiemSoNguoiDungs" Relationship="Self.FK__DiemSoNgu__UserI__7E37BEF6" FromRole="NguoiDung" ToRole="DiemSoNguoiDung" />
-          <NavigationProperty Name="Dislikes" Relationship="Self.FK__Dislikes__UserID__7B5B524B" FromRole="NguoiDung" ToRole="Dislikes" />
-          <NavigationProperty Name="HoatDongNguoiDungs" Relationship="Self.FK__HoatDongN__UserI__04E4BC85" FromRole="NguoiDung" ToRole="HoatDongNguoiDung" />
-          <NavigationProperty Name="Likes" Relationship="Self.FK__Likes__UserID__778AC167" FromRole="NguoiDung" ToRole="Likes" />
-          <NavigationProperty Name="VaiTro" Relationship="Self.FK_NguoiDung_VaiTro" FromRole="NguoiDung" ToRole="VaiTro" />
-        </EntityType>
-        <EntityType Name="VaiTro">
-          <Key>
-            <PropertyRef Name="VaitroID" />
-          </Key>
-          <Property Name="VaitroID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TenVaiTro" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="NguoiDungs" Relationship="Self.FK_NguoiDung_VaiTro" FromRole="VaiTro" ToRole="NguoiDung" />
-        </EntityType>
-        <Association Name="FK__Dislikes__BaiVie__534D60F1">
-          <End Role="BaiViet" Type="Self.BaiViet" Multiplicity="1" />
-          <End Role="Dislikes" Type="Self.Dislike" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BaiViet">
-              <PropertyRef Name="BaiVietID" />
-            </Principal>
-            <Dependent Role="Dislikes">
-              <PropertyRef Name="BaiVietID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Likes__BaiVietID__571DF1D5">
-          <End Role="BaiViet" Type="Self.BaiViet" Multiplicity="1" />
-          <End Role="Likes" Type="Self.Like" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BaiViet">
-              <PropertyRef Name="BaiVietID" />
-            </Principal>
-            <Dependent Role="Likes">
-              <PropertyRef Name="BaiVietID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_BaiViet_DanhMuc">
-          <End Role="DanhMuc" Type="Self.DanhMuc" Multiplicity="1" />
-          <End Role="BaiViet" Type="Self.BaiViet" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DanhMuc">
-              <PropertyRef Name="DanhMucID" />
-            </Principal>
-            <Dependent Role="BaiViet">
-              <PropertyRef Name="DanhMucID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_BaiViet_NguoiDung">
-          <End Role="NguoiDung" Type="Self.NguoiDung" Multiplicity="1" />
-          <End Role="BaiViet" Type="Self.BaiViet" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NguoiDung">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="BaiViet">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_BinhLuan_BaiViet">
-          <End Role="BaiViet" Type="Self.BaiViet" Multiplicity="1" />
-          <End Role="BinhLuan" Type="Self.BinhLuan" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BaiViet">
-              <PropertyRef Name="BaiVietID" />
-            </Principal>
-            <Dependent Role="BinhLuan">
-              <PropertyRef Name="BaiVietID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_BinhLuan_NguoiDung">
-          <End Role="NguoiDung" Type="Self.NguoiDung" Multiplicity="1" />
-          <End Role="BinhLuan" Type="Self.BinhLuan" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NguoiDung">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="BinhLuan">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Chat_NguoiDung">
-          <End Role="NguoiDung" Type="Self.NguoiDung" Multiplicity="1" />
-          <End Role="Chat" Type="Self.Chat" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NguoiDung">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="Chat">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__DiemSoNgu__UserI__7E37BEF6">
-          <End Role="NguoiDung" Type="Self.NguoiDung" Multiplicity="0..1" />
-          <End Role="DiemSoNguoiDung" Type="Self.DiemSoNguoiDung" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NguoiDung">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="DiemSoNguoiDung">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Dislikes__UserID__7B5B524B">
-          <End Role="NguoiDung" Type="Self.NguoiDung" Multiplicity="1" />
-          <End Role="Dislikes" Type="Self.Dislike" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NguoiDung">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="Dislikes">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__HoatDongN__HoatD__5535A963">
-          <End Role="HoatDong" Type="Self.HoatDong" Multiplicity="0..1" />
-          <End Role="HoatDongNguoiDung" Type="Self.HoatDongNguoiDung" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="HoatDong">
-              <PropertyRef Name="HoatDongID" />
-            </Principal>
-            <Dependent Role="HoatDongNguoiDung">
-              <PropertyRef Name="HoatDongID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__HoatDongN__UserI__04E4BC85">
-          <End Role="NguoiDung" Type="Self.NguoiDung" Multiplicity="0..1" />
-          <End Role="HoatDongNguoiDung" Type="Self.HoatDongNguoiDung" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NguoiDung">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="HoatDongNguoiDung">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Likes__UserID__778AC167">
-          <End Role="NguoiDung" Type="Self.NguoiDung" Multiplicity="1" />
-          <End Role="Likes" Type="Self.Like" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NguoiDung">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="Likes">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_NguoiDung_VaiTro">
-          <End Role="VaiTro" Type="Self.VaiTro" Multiplicity="1" />
-          <End Role="NguoiDung" Type="Self.NguoiDung" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="VaiTro">
-              <PropertyRef Name="VaitroID" />
-            </Principal>
-            <Dependent Role="NguoiDung">
-              <PropertyRef Name="VaitroID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="ForumTroChuyenEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="BaiViets" EntityType="Self.BaiViet" />
-          <EntitySet Name="BinhLuans" EntityType="Self.BinhLuan" />
-          <EntitySet Name="Chats" EntityType="Self.Chat" />
-          <EntitySet Name="DanhMucs" EntityType="Self.DanhMuc" />
-          <EntitySet Name="DiemSoNguoiDungs" EntityType="Self.DiemSoNguoiDung" />
-          <EntitySet Name="Dislikes" EntityType="Self.Dislike" />
-          <EntitySet Name="HeThongCapDoes" EntityType="Self.HeThongCapDo" />
-          <EntitySet Name="HoatDongs" EntityType="Self.HoatDong" />
-          <EntitySet Name="HoatDongNguoiDungs" EntityType="Self.HoatDongNguoiDung" />
-          <EntitySet Name="Likes" EntityType="Self.Like" />
-          <EntitySet Name="NguoiDungs" EntityType="Self.NguoiDung" />
-          <EntitySet Name="VaiTroes" EntityType="Self.VaiTro" />
-          <AssociationSet Name="FK__Dislikes__BaiVie__534D60F1" Association="Self.FK__Dislikes__BaiVie__534D60F1">
-            <End Role="BaiViet" EntitySet="BaiViets" />
-            <End Role="Dislikes" EntitySet="Dislikes" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Likes__BaiVietID__571DF1D5" Association="Self.FK__Likes__BaiVietID__571DF1D5">
-            <End Role="BaiViet" EntitySet="BaiViets" />
-            <End Role="Likes" EntitySet="Likes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BaiViet_DanhMuc" Association="Self.FK_BaiViet_DanhMuc">
-            <End Role="DanhMuc" EntitySet="DanhMucs" />
-            <End Role="BaiViet" EntitySet="BaiViets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BaiViet_NguoiDung" Association="Self.FK_BaiViet_NguoiDung">
-            <End Role="NguoiDung" EntitySet="NguoiDungs" />
-            <End Role="BaiViet" EntitySet="BaiViets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BinhLuan_BaiViet" Association="Self.FK_BinhLuan_BaiViet">
-            <End Role="BaiViet" EntitySet="BaiViets" />
-            <End Role="BinhLuan" EntitySet="BinhLuans" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BinhLuan_NguoiDung" Association="Self.FK_BinhLuan_NguoiDung">
-            <End Role="NguoiDung" EntitySet="NguoiDungs" />
-            <End Role="BinhLuan" EntitySet="BinhLuans" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Chat_NguoiDung" Association="Self.FK_Chat_NguoiDung">
-            <End Role="NguoiDung" EntitySet="NguoiDungs" />
-            <End Role="Chat" EntitySet="Chats" />
-          </AssociationSet>
-          <AssociationSet Name="FK__DiemSoNgu__UserI__7E37BEF6" Association="Self.FK__DiemSoNgu__UserI__7E37BEF6">
-            <End Role="NguoiDung" EntitySet="NguoiDungs" />
-            <End Role="DiemSoNguoiDung" EntitySet="DiemSoNguoiDungs" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Dislikes__UserID__7B5B524B" Association="Self.FK__Dislikes__UserID__7B5B524B">
-            <End Role="NguoiDung" EntitySet="NguoiDungs" />
-            <End Role="Dislikes" EntitySet="Dislikes" />
-          </AssociationSet>
-          <AssociationSet Name="FK__HoatDongN__HoatD__5535A963" Association="Self.FK__HoatDongN__HoatD__5535A963">
-            <End Role="HoatDong" EntitySet="HoatDongs" />
-            <End Role="HoatDongNguoiDung" EntitySet="HoatDongNguoiDungs" />
-          </AssociationSet>
-          <AssociationSet Name="FK__HoatDongN__UserI__04E4BC85" Association="Self.FK__HoatDongN__UserI__04E4BC85">
-            <End Role="NguoiDung" EntitySet="NguoiDungs" />
-            <End Role="HoatDongNguoiDung" EntitySet="HoatDongNguoiDungs" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Likes__UserID__778AC167" Association="Self.FK__Likes__UserID__778AC167">
-            <End Role="NguoiDung" EntitySet="NguoiDungs" />
-            <End Role="Likes" EntitySet="Likes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_NguoiDung_VaiTro" Association="Self.FK_NguoiDung_VaiTro">
-            <End Role="VaiTro" EntitySet="VaiTroes" />
-            <End Role="NguoiDung" EntitySet="NguoiDungs" />
-          </AssociationSet>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
@@ -764,6 +416,71 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="BaiViets" EntityType="ForumTroChuyenModel.BaiViet" />
+          <EntitySet Name="BinhLuans" EntityType="ForumTroChuyenModel.BinhLuan" />
+          <EntitySet Name="Chats" EntityType="ForumTroChuyenModel.Chat" />
+          <EntitySet Name="DanhMucs" EntityType="ForumTroChuyenModel.DanhMuc" />
+          <EntitySet Name="DiemSoNguoiDungs" EntityType="ForumTroChuyenModel.DiemSoNguoiDung" />
+          <EntitySet Name="Dislikes" EntityType="ForumTroChuyenModel.Dislike" />
+          <EntitySet Name="HeThongCapDoes" EntityType="ForumTroChuyenModel.HeThongCapDo" />
+          <EntitySet Name="HoatDongs" EntityType="ForumTroChuyenModel.HoatDong" />
+          <EntitySet Name="HoatDongNguoiDungs" EntityType="ForumTroChuyenModel.HoatDongNguoiDung" />
+          <EntitySet Name="Likes" EntityType="ForumTroChuyenModel.Like" />
+          <EntitySet Name="NguoiDungs" EntityType="ForumTroChuyenModel.NguoiDung" />
+          <EntitySet Name="sysdiagrams" EntityType="ForumTroChuyenModel.sysdiagram" />
+          <EntitySet Name="VaiTroes" EntityType="ForumTroChuyenModel.VaiTro" />
+          <AssociationSet Name="FK__Dislikes__BaiVie__534D60F1" Association="ForumTroChuyenModel.FK__Dislikes__BaiVie__534D60F1">
+            <End Role="BaiViet" EntitySet="BaiViets" />
+            <End Role="Dislike" EntitySet="Dislikes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Likes__BaiVietID__571DF1D5" Association="ForumTroChuyenModel.FK__Likes__BaiVietID__571DF1D5">
+            <End Role="BaiViet" EntitySet="BaiViets" />
+            <End Role="Like" EntitySet="Likes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaiViet_DanhMuc" Association="ForumTroChuyenModel.FK_BaiViet_DanhMuc">
+            <End Role="DanhMuc" EntitySet="DanhMucs" />
+            <End Role="BaiViet" EntitySet="BaiViets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaiViet_NguoiDung" Association="ForumTroChuyenModel.FK_BaiViet_NguoiDung">
+            <End Role="NguoiDung" EntitySet="NguoiDungs" />
+            <End Role="BaiViet" EntitySet="BaiViets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BinhLuan_BaiViet" Association="ForumTroChuyenModel.FK_BinhLuan_BaiViet">
+            <End Role="BaiViet" EntitySet="BaiViets" />
+            <End Role="BinhLuan" EntitySet="BinhLuans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BinhLuan_NguoiDung" Association="ForumTroChuyenModel.FK_BinhLuan_NguoiDung">
+            <End Role="NguoiDung" EntitySet="NguoiDungs" />
+            <End Role="BinhLuan" EntitySet="BinhLuans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Chat_NguoiDung" Association="ForumTroChuyenModel.FK_Chat_NguoiDung">
+            <End Role="NguoiDung" EntitySet="NguoiDungs" />
+            <End Role="Chat" EntitySet="Chats" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DiemSoNgu__UserI__7E37BEF6" Association="ForumTroChuyenModel.FK__DiemSoNgu__UserI__7E37BEF6">
+            <End Role="NguoiDung" EntitySet="NguoiDungs" />
+            <End Role="DiemSoNguoiDung" EntitySet="DiemSoNguoiDungs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Dislikes__UserID__7B5B524B" Association="ForumTroChuyenModel.FK__Dislikes__UserID__7B5B524B">
+            <End Role="NguoiDung" EntitySet="NguoiDungs" />
+            <End Role="Dislike" EntitySet="Dislikes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HoatDongN__HoatD__5535A963" Association="ForumTroChuyenModel.FK__HoatDongN__HoatD__5535A963">
+            <End Role="HoatDong" EntitySet="HoatDongs" />
+            <End Role="HoatDongNguoiDung" EntitySet="HoatDongNguoiDungs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HoatDongN__UserI__04E4BC85" Association="ForumTroChuyenModel.FK__HoatDongN__UserI__04E4BC85">
+            <End Role="NguoiDung" EntitySet="NguoiDungs" />
+            <End Role="HoatDongNguoiDung" EntitySet="HoatDongNguoiDungs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Likes__UserID__778AC167" Association="ForumTroChuyenModel.FK__Likes__UserID__778AC167">
+            <End Role="NguoiDung" EntitySet="NguoiDungs" />
+            <End Role="Like" EntitySet="Likes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NguoiDung_VaiTro" Association="ForumTroChuyenModel.FK_NguoiDung_VaiTro">
+            <End Role="VaiTro" EntitySet="VaiTroes" />
+            <End Role="NguoiDung" EntitySet="NguoiDungs" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -776,136 +493,316 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="BaiViet">
+          <Key>
+            <PropertyRef Name="BaiVietID" />
+          </Key>
+          <Property Name="BaiVietID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TieuDe" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NoiDung" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="NgayDang" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="DanhMucID" Type="Int32" Nullable="false" />
+          <Property Name="HinhAnh" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="TrangThai" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Dislikes" Relationship="ForumTroChuyenModel.FK__Dislikes__BaiVie__534D60F1" FromRole="BaiViet" ToRole="Dislike" />
+          <NavigationProperty Name="Likes" Relationship="ForumTroChuyenModel.FK__Likes__BaiVietID__571DF1D5" FromRole="BaiViet" ToRole="Like" />
+          <NavigationProperty Name="DanhMuc" Relationship="ForumTroChuyenModel.FK_BaiViet_DanhMuc" FromRole="BaiViet" ToRole="DanhMuc" />
+          <NavigationProperty Name="NguoiDung" Relationship="ForumTroChuyenModel.FK_BaiViet_NguoiDung" FromRole="BaiViet" ToRole="NguoiDung" />
+          <NavigationProperty Name="BinhLuans" Relationship="ForumTroChuyenModel.FK_BinhLuan_BaiViet" FromRole="BaiViet" ToRole="BinhLuan" />
+        </EntityType>
+        <EntityType Name="BinhLuan">
+          <Key>
+            <PropertyRef Name="BinhLuanID" />
+          </Key>
+          <Property Name="BinhLuanID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BaiVietID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="NoiDung" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="NgayBinhLuan" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="BaiViet" Relationship="ForumTroChuyenModel.FK_BinhLuan_BaiViet" FromRole="BinhLuan" ToRole="BaiViet" />
+          <NavigationProperty Name="NguoiDung" Relationship="ForumTroChuyenModel.FK_BinhLuan_NguoiDung" FromRole="BinhLuan" ToRole="NguoiDung" />
+        </EntityType>
+        <EntityType Name="Chat">
+          <Key>
+            <PropertyRef Name="MaChat" />
+          </Key>
+          <Property Name="MaChat" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="TinNhan" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ThoiGianGui" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="NguoiDung" Relationship="ForumTroChuyenModel.FK_Chat_NguoiDung" FromRole="Chat" ToRole="NguoiDung" />
+        </EntityType>
+        <EntityType Name="DanhMuc">
+          <Key>
+            <PropertyRef Name="DanhMucID" />
+          </Key>
+          <Property Name="DanhMucID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenDanhMuc" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BaiViets" Relationship="ForumTroChuyenModel.FK_BaiViet_DanhMuc" FromRole="DanhMuc" ToRole="BaiViet" />
+        </EntityType>
+        <EntityType Name="DiemSoNguoiDung">
+          <Key>
+            <PropertyRef Name="DiemSoID" />
+          </Key>
+          <Property Name="DiemSoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="DiemSo" Type="Int32" />
+          <NavigationProperty Name="NguoiDung" Relationship="ForumTroChuyenModel.FK__DiemSoNgu__UserI__7E37BEF6" FromRole="DiemSoNguoiDung" ToRole="NguoiDung" />
+        </EntityType>
+        <EntityType Name="Dislike">
+          <Key>
+            <PropertyRef Name="KhongThichID" />
+          </Key>
+          <Property Name="KhongThichID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BaiVietID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BaiViet" Relationship="ForumTroChuyenModel.FK__Dislikes__BaiVie__534D60F1" FromRole="Dislike" ToRole="BaiViet" />
+          <NavigationProperty Name="NguoiDung" Relationship="ForumTroChuyenModel.FK__Dislikes__UserID__7B5B524B" FromRole="Dislike" ToRole="NguoiDung" />
+        </EntityType>
+        <EntityType Name="HeThongCapDo">
+          <Key>
+            <PropertyRef Name="CapDoID" />
+          </Key>
+          <Property Name="CapDoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenCapDo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DiemToiThieu" Type="Int32" />
+        </EntityType>
+        <EntityType Name="HoatDong">
+          <Key>
+            <PropertyRef Name="HoatDongID" />
+          </Key>
+          <Property Name="HoatDongID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenHoatDong" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Diem" Type="Int32" />
+          <NavigationProperty Name="HoatDongNguoiDungs" Relationship="ForumTroChuyenModel.FK__HoatDongN__HoatD__5535A963" FromRole="HoatDong" ToRole="HoatDongNguoiDung" />
+        </EntityType>
+        <EntityType Name="HoatDongNguoiDung">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="HoatDongID" Type="Int32" />
+          <Property Name="ThoiGian" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="HoatDong" Relationship="ForumTroChuyenModel.FK__HoatDongN__HoatD__5535A963" FromRole="HoatDongNguoiDung" ToRole="HoatDong" />
+          <NavigationProperty Name="NguoiDung" Relationship="ForumTroChuyenModel.FK__HoatDongN__UserI__04E4BC85" FromRole="HoatDongNguoiDung" ToRole="NguoiDung" />
+        </EntityType>
+        <EntityType Name="Like">
+          <Key>
+            <PropertyRef Name="ThichID" />
+          </Key>
+          <Property Name="ThichID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BaiVietID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BaiViet" Relationship="ForumTroChuyenModel.FK__Likes__BaiVietID__571DF1D5" FromRole="Like" ToRole="BaiViet" />
+          <NavigationProperty Name="NguoiDung" Relationship="ForumTroChuyenModel.FK__Likes__UserID__778AC167" FromRole="Like" ToRole="NguoiDung" />
+        </EntityType>
+        <EntityType Name="NguoiDung">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenNguoiDung" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Avatar" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NgayDangKy" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TrangThai" Type="Byte" Nullable="false" />
+          <Property Name="VaitroID" Type="Int32" Nullable="false" />
+          <Property Name="CapDo" Type="Int32" Nullable="false" />
+          <Property Name="GioiTinh" Type="Int32" Nullable="false" />
+          <Property Name="Token" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BaiViets" Relationship="ForumTroChuyenModel.FK_BaiViet_NguoiDung" FromRole="NguoiDung" ToRole="BaiViet" />
+          <NavigationProperty Name="BinhLuans" Relationship="ForumTroChuyenModel.FK_BinhLuan_NguoiDung" FromRole="NguoiDung" ToRole="BinhLuan" />
+          <NavigationProperty Name="Chats" Relationship="ForumTroChuyenModel.FK_Chat_NguoiDung" FromRole="NguoiDung" ToRole="Chat" />
+          <NavigationProperty Name="DiemSoNguoiDungs" Relationship="ForumTroChuyenModel.FK__DiemSoNgu__UserI__7E37BEF6" FromRole="NguoiDung" ToRole="DiemSoNguoiDung" />
+          <NavigationProperty Name="Dislikes" Relationship="ForumTroChuyenModel.FK__Dislikes__UserID__7B5B524B" FromRole="NguoiDung" ToRole="Dislike" />
+          <NavigationProperty Name="HoatDongNguoiDungs" Relationship="ForumTroChuyenModel.FK__HoatDongN__UserI__04E4BC85" FromRole="NguoiDung" ToRole="HoatDongNguoiDung" />
+          <NavigationProperty Name="Likes" Relationship="ForumTroChuyenModel.FK__Likes__UserID__778AC167" FromRole="NguoiDung" ToRole="Like" />
+          <NavigationProperty Name="VaiTro" Relationship="ForumTroChuyenModel.FK_NguoiDung_VaiTro" FromRole="NguoiDung" ToRole="VaiTro" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="VaiTro">
+          <Key>
+            <PropertyRef Name="VaitroID" />
+          </Key>
+          <Property Name="VaitroID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenVaiTro" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NguoiDungs" Relationship="ForumTroChuyenModel.FK_NguoiDung_VaiTro" FromRole="VaiTro" ToRole="NguoiDung" />
+        </EntityType>
+        <Association Name="FK__Dislikes__BaiVie__534D60F1">
+          <End Type="ForumTroChuyenModel.BaiViet" Role="BaiViet" Multiplicity="1" />
+          <End Type="ForumTroChuyenModel.Dislike" Role="Dislike" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaiViet">
+              <PropertyRef Name="BaiVietID" />
+            </Principal>
+            <Dependent Role="Dislike">
+              <PropertyRef Name="BaiVietID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Likes__BaiVietID__571DF1D5">
+          <End Type="ForumTroChuyenModel.BaiViet" Role="BaiViet" Multiplicity="1" />
+          <End Type="ForumTroChuyenModel.Like" Role="Like" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaiViet">
+              <PropertyRef Name="BaiVietID" />
+            </Principal>
+            <Dependent Role="Like">
+              <PropertyRef Name="BaiVietID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaiViet_DanhMuc">
+          <End Type="ForumTroChuyenModel.DanhMuc" Role="DanhMuc" Multiplicity="1" />
+          <End Type="ForumTroChuyenModel.BaiViet" Role="BaiViet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DanhMuc">
+              <PropertyRef Name="DanhMucID" />
+            </Principal>
+            <Dependent Role="BaiViet">
+              <PropertyRef Name="DanhMucID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaiViet_NguoiDung">
+          <End Type="ForumTroChuyenModel.NguoiDung" Role="NguoiDung" Multiplicity="1" />
+          <End Type="ForumTroChuyenModel.BaiViet" Role="BaiViet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NguoiDung">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="BaiViet">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BinhLuan_BaiViet">
+          <End Type="ForumTroChuyenModel.BaiViet" Role="BaiViet" Multiplicity="1" />
+          <End Type="ForumTroChuyenModel.BinhLuan" Role="BinhLuan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaiViet">
+              <PropertyRef Name="BaiVietID" />
+            </Principal>
+            <Dependent Role="BinhLuan">
+              <PropertyRef Name="BaiVietID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BinhLuan_NguoiDung">
+          <End Type="ForumTroChuyenModel.NguoiDung" Role="NguoiDung" Multiplicity="1" />
+          <End Type="ForumTroChuyenModel.BinhLuan" Role="BinhLuan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NguoiDung">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="BinhLuan">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Chat_NguoiDung">
+          <End Type="ForumTroChuyenModel.NguoiDung" Role="NguoiDung" Multiplicity="1" />
+          <End Type="ForumTroChuyenModel.Chat" Role="Chat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NguoiDung">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Chat">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DiemSoNgu__UserI__7E37BEF6">
+          <End Type="ForumTroChuyenModel.NguoiDung" Role="NguoiDung" Multiplicity="0..1" />
+          <End Type="ForumTroChuyenModel.DiemSoNguoiDung" Role="DiemSoNguoiDung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NguoiDung">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="DiemSoNguoiDung">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Dislikes__UserID__7B5B524B">
+          <End Type="ForumTroChuyenModel.NguoiDung" Role="NguoiDung" Multiplicity="1" />
+          <End Type="ForumTroChuyenModel.Dislike" Role="Dislike" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NguoiDung">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Dislike">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HoatDongN__HoatD__5535A963">
+          <End Type="ForumTroChuyenModel.HoatDong" Role="HoatDong" Multiplicity="0..1" />
+          <End Type="ForumTroChuyenModel.HoatDongNguoiDung" Role="HoatDongNguoiDung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HoatDong">
+              <PropertyRef Name="HoatDongID" />
+            </Principal>
+            <Dependent Role="HoatDongNguoiDung">
+              <PropertyRef Name="HoatDongID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HoatDongN__UserI__04E4BC85">
+          <End Type="ForumTroChuyenModel.NguoiDung" Role="NguoiDung" Multiplicity="0..1" />
+          <End Type="ForumTroChuyenModel.HoatDongNguoiDung" Role="HoatDongNguoiDung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NguoiDung">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="HoatDongNguoiDung">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Likes__UserID__778AC167">
+          <End Type="ForumTroChuyenModel.NguoiDung" Role="NguoiDung" Multiplicity="1" />
+          <End Type="ForumTroChuyenModel.Like" Role="Like" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NguoiDung">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Like">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NguoiDung_VaiTro">
+          <End Type="ForumTroChuyenModel.VaiTro" Role="VaiTro" Multiplicity="1" />
+          <End Type="ForumTroChuyenModel.NguoiDung" Role="NguoiDung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VaiTro">
+              <PropertyRef Name="VaitroID" />
+            </Principal>
+            <Dependent Role="NguoiDung">
+              <PropertyRef Name="VaitroID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ForumTroChuyenModelStoreContainer" CdmEntityContainer="ForumTroChuyenEntities">
-          <EntitySetMapping Name="BaiViets">
-            <EntityTypeMapping TypeName="ForumTroChuyenModel.BaiViet">
-              <MappingFragment StoreEntitySet="BaiViet">
-                <ScalarProperty Name="BaiVietID" ColumnName="BaiVietID" />
-                <ScalarProperty Name="TieuDe" ColumnName="TieuDe" />
-                <ScalarProperty Name="NoiDung" ColumnName="NoiDung" />
-                <ScalarProperty Name="NgayDang" ColumnName="NgayDang" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="DanhMucID" ColumnName="DanhMucID" />
-                <ScalarProperty Name="HinhAnh" ColumnName="HinhAnh" />
-                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BinhLuans">
-            <EntityTypeMapping TypeName="ForumTroChuyenModel.BinhLuan">
-              <MappingFragment StoreEntitySet="BinhLuan">
-                <ScalarProperty Name="BinhLuanID" ColumnName="BinhLuanID" />
-                <ScalarProperty Name="BaiVietID" ColumnName="BaiVietID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="NoiDung" ColumnName="NoiDung" />
-                <ScalarProperty Name="NgayBinhLuan" ColumnName="NgayBinhLuan" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Chats">
-            <EntityTypeMapping TypeName="ForumTroChuyenModel.Chat">
-              <MappingFragment StoreEntitySet="Chat">
-                <ScalarProperty Name="MaChat" ColumnName="MaChat" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="TinNhan" ColumnName="TinNhan" />
-                <ScalarProperty Name="ThoiGianGui" ColumnName="ThoiGianGui" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DanhMucs">
-            <EntityTypeMapping TypeName="ForumTroChuyenModel.DanhMuc">
-              <MappingFragment StoreEntitySet="DanhMuc">
-                <ScalarProperty Name="DanhMucID" ColumnName="DanhMucID" />
-                <ScalarProperty Name="TenDanhMuc" ColumnName="TenDanhMuc" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DiemSoNguoiDungs">
-            <EntityTypeMapping TypeName="ForumTroChuyenModel.DiemSoNguoiDung">
-              <MappingFragment StoreEntitySet="DiemSoNguoiDung">
-                <ScalarProperty Name="DiemSoID" ColumnName="DiemSoID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="DiemSo" ColumnName="DiemSo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Dislikes">
-            <EntityTypeMapping TypeName="ForumTroChuyenModel.Dislike">
-              <MappingFragment StoreEntitySet="Dislikes">
-                <ScalarProperty Name="KhongThichID" ColumnName="KhongThichID" />
-                <ScalarProperty Name="BaiVietID" ColumnName="BaiVietID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="HeThongCapDoes">
-            <EntityTypeMapping TypeName="ForumTroChuyenModel.HeThongCapDo">
-              <MappingFragment StoreEntitySet="HeThongCapDo">
-                <ScalarProperty Name="CapDoID" ColumnName="CapDoID" />
-                <ScalarProperty Name="TenCapDo" ColumnName="TenCapDo" />
-                <ScalarProperty Name="DiemToiThieu" ColumnName="DiemToiThieu" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="HoatDongs">
-            <EntityTypeMapping TypeName="ForumTroChuyenModel.HoatDong">
-              <MappingFragment StoreEntitySet="HoatDong">
-                <ScalarProperty Name="HoatDongID" ColumnName="HoatDongID" />
-                <ScalarProperty Name="TenHoatDong" ColumnName="TenHoatDong" />
-                <ScalarProperty Name="Diem" ColumnName="Diem" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="HoatDongNguoiDungs">
-            <EntityTypeMapping TypeName="ForumTroChuyenModel.HoatDongNguoiDung">
-              <MappingFragment StoreEntitySet="HoatDongNguoiDung">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="HoatDongID" ColumnName="HoatDongID" />
-                <ScalarProperty Name="ThoiGian" ColumnName="ThoiGian" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Likes">
-            <EntityTypeMapping TypeName="ForumTroChuyenModel.Like">
-              <MappingFragment StoreEntitySet="Likes">
-                <ScalarProperty Name="ThichID" ColumnName="ThichID" />
-                <ScalarProperty Name="BaiVietID" ColumnName="BaiVietID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="NguoiDungs">
-            <EntityTypeMapping TypeName="ForumTroChuyenModel.NguoiDung">
-              <MappingFragment StoreEntitySet="NguoiDung">
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="TenNguoiDung" ColumnName="TenNguoiDung" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
-                <ScalarProperty Name="NgayDangKy" ColumnName="NgayDangKy" />
-                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
-                <ScalarProperty Name="VaitroID" ColumnName="VaitroID" />
-                <ScalarProperty Name="CapDo" ColumnName="CapDo" />
-                <ScalarProperty Name="GioiTinh" ColumnName="GioiTinh" />
-                <ScalarProperty Name="Token" ColumnName="Token" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="VaiTroes">
-            <EntityTypeMapping TypeName="ForumTroChuyenModel.VaiTro">
-              <MappingFragment StoreEntitySet="VaiTro">
-                <ScalarProperty Name="VaitroID" ColumnName="VaitroID" />
-                <ScalarProperty Name="TenVaiTro" ColumnName="TenVaiTro" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="ForumTroChuyenModel.Store.sp_alterdiagram" />
           <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="ForumTroChuyenModel.Store.sp_creatediagram" />
           <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="ForumTroChuyenModel.Store.sp_dropdiagram" />
@@ -930,6 +827,141 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="ForumTroChuyenModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="ForumTroChuyenModel.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="BaiViets">
+            <EntityTypeMapping TypeName="ForumTroChuyenModel.BaiViet">
+              <MappingFragment StoreEntitySet="BaiViet">
+                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+                <ScalarProperty Name="HinhAnh" ColumnName="HinhAnh" />
+                <ScalarProperty Name="DanhMucID" ColumnName="DanhMucID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="NgayDang" ColumnName="NgayDang" />
+                <ScalarProperty Name="NoiDung" ColumnName="NoiDung" />
+                <ScalarProperty Name="TieuDe" ColumnName="TieuDe" />
+                <ScalarProperty Name="BaiVietID" ColumnName="BaiVietID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BinhLuans">
+            <EntityTypeMapping TypeName="ForumTroChuyenModel.BinhLuan">
+              <MappingFragment StoreEntitySet="BinhLuan">
+                <ScalarProperty Name="NgayBinhLuan" ColumnName="NgayBinhLuan" />
+                <ScalarProperty Name="NoiDung" ColumnName="NoiDung" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="BaiVietID" ColumnName="BaiVietID" />
+                <ScalarProperty Name="BinhLuanID" ColumnName="BinhLuanID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Chats">
+            <EntityTypeMapping TypeName="ForumTroChuyenModel.Chat">
+              <MappingFragment StoreEntitySet="Chat">
+                <ScalarProperty Name="ThoiGianGui" ColumnName="ThoiGianGui" />
+                <ScalarProperty Name="TinNhan" ColumnName="TinNhan" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="MaChat" ColumnName="MaChat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DanhMucs">
+            <EntityTypeMapping TypeName="ForumTroChuyenModel.DanhMuc">
+              <MappingFragment StoreEntitySet="DanhMuc">
+                <ScalarProperty Name="TenDanhMuc" ColumnName="TenDanhMuc" />
+                <ScalarProperty Name="DanhMucID" ColumnName="DanhMucID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DiemSoNguoiDungs">
+            <EntityTypeMapping TypeName="ForumTroChuyenModel.DiemSoNguoiDung">
+              <MappingFragment StoreEntitySet="DiemSoNguoiDung">
+                <ScalarProperty Name="DiemSo" ColumnName="DiemSo" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="DiemSoID" ColumnName="DiemSoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dislikes">
+            <EntityTypeMapping TypeName="ForumTroChuyenModel.Dislike">
+              <MappingFragment StoreEntitySet="Dislikes">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="BaiVietID" ColumnName="BaiVietID" />
+                <ScalarProperty Name="KhongThichID" ColumnName="KhongThichID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HeThongCapDoes">
+            <EntityTypeMapping TypeName="ForumTroChuyenModel.HeThongCapDo">
+              <MappingFragment StoreEntitySet="HeThongCapDo">
+                <ScalarProperty Name="DiemToiThieu" ColumnName="DiemToiThieu" />
+                <ScalarProperty Name="TenCapDo" ColumnName="TenCapDo" />
+                <ScalarProperty Name="CapDoID" ColumnName="CapDoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HoatDongs">
+            <EntityTypeMapping TypeName="ForumTroChuyenModel.HoatDong">
+              <MappingFragment StoreEntitySet="HoatDong">
+                <ScalarProperty Name="Diem" ColumnName="Diem" />
+                <ScalarProperty Name="TenHoatDong" ColumnName="TenHoatDong" />
+                <ScalarProperty Name="HoatDongID" ColumnName="HoatDongID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HoatDongNguoiDungs">
+            <EntityTypeMapping TypeName="ForumTroChuyenModel.HoatDongNguoiDung">
+              <MappingFragment StoreEntitySet="HoatDongNguoiDung">
+                <ScalarProperty Name="ThoiGian" ColumnName="ThoiGian" />
+                <ScalarProperty Name="HoatDongID" ColumnName="HoatDongID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Likes">
+            <EntityTypeMapping TypeName="ForumTroChuyenModel.Like">
+              <MappingFragment StoreEntitySet="Likes">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="BaiVietID" ColumnName="BaiVietID" />
+                <ScalarProperty Name="ThichID" ColumnName="ThichID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NguoiDungs">
+            <EntityTypeMapping TypeName="ForumTroChuyenModel.NguoiDung">
+              <MappingFragment StoreEntitySet="NguoiDung">
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="GioiTinh" ColumnName="GioiTinh" />
+                <ScalarProperty Name="CapDo" ColumnName="CapDo" />
+                <ScalarProperty Name="VaitroID" ColumnName="VaitroID" />
+                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+                <ScalarProperty Name="NgayDangKy" ColumnName="NgayDangKy" />
+                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="TenNguoiDung" ColumnName="TenNguoiDung" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ForumTroChuyenModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VaiTroes">
+            <EntityTypeMapping TypeName="ForumTroChuyenModel.VaiTro">
+              <MappingFragment StoreEntitySet="VaiTro">
+                <ScalarProperty Name="TenVaiTro" ColumnName="TenVaiTro" />
+                <ScalarProperty Name="VaitroID" ColumnName="VaitroID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

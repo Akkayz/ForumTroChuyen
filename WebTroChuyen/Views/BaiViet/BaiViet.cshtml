@@ -1,7 +1,10 @@
-﻿@{
+﻿@model List<WebTroChuyen.Models.BaiViet>
+
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutTrangChu.cshtml";
 }
+
 <div class="container bg-white" style="max-width: 1000px;">
     <div class="row">
         <div class="col-md-8">
@@ -21,164 +24,113 @@
             </ul>
             <div style="margin-bottom: 20px;"></div> <!-- Khoảng cách giữa danh sách và bài viết -->
             <section class="list-view">
-                <article class="border p-3 mb-3">
-                    <!-- Phần 1: Thông tin tài khoản -->
-                    <div class="account-frame d-flex" style="max-height: 40px;">
-                        <img src="~/Images/Users/1385117.jpg" width="40" height="40" alt="Avatar" class="avatar me-3">
-                        <div class="user-info">
-                            <h6 class="mb-0" style="opacity: 0.5;">Akkay</h6>
-                            <span class="timestamp" style="opacity: 0.5;">Cách đây 5 phút</span>
-                        </div>
-                        <div class="user-level d-flex align-items-center justify-content-center rounded bg-primary text-white" style="width: 60px; height: 30px;">
-                            <div class="level-info">
-                                <span class="user-level-text">Cấp 5</span>
+                @foreach (var baiViet in ViewBag.DanhSachBaiViet)
+                {
+                    <article class="border p-3 mb-3">
+                        <div class="account-frame d-flex" style="max-height: 40px;">
+                            <img src="~/Images/UserAvatar/@baiViet.NguoiDung.Avatar" width="40" height="40" alt="Avatar" class="avatar me-3">
+                            <div class="user-info">
+                                <h6 class="mb-0 text-opacity">@baiViet.NguoiDung.TenNguoiDung</h6>
+                                <span class="timestamp text-opacity">@CalculateTimeDifference(baiViet.NgayDang)</span>
                             </div>
-                        </div>
-                        <span class="category" style="margin-left: 20px; opacity: 0.7;">Thư giãn - Chém gió</span>
-                    </div>
-
-                    <!-- Phần 2: Tiêu đề nội dung đăng -->
-                    <h2 class="mt-3">Tiêu đề bài viết</h2>
-                    <p>Nội dung bài viết...</p>
-
-                    <!-- Phần 3: Ảnh đăng -->
-                    <figure class="mt-3">
-                        <img src="~/Images/Chats/2-thi-ghk1.jpg" alt="Mô tả ảnh" class="img-fluid">
-                    </figure>
-
-                    <!-- Phần 4: Footer của bài viết -->
-                    <section class="post-footer mt-3">
-                        <ul class="post-vote list-unstyled d-flex">
-                            <li class="post-vote-item me-4">
-                                <a href="#" class="post-vote-link" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none;">
-                                    <i class="fa fa-thumbs-up"></i>
-                                    <span class="post-vote-count">1</span>
-                                </a>
-                            </li>
-                            <li class="post-vote-item me-4">
-                                <a href="#" class="post-vote-link" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none;">
-                                    <i class="fa fa-thumbs-down"></i>
-                                    <span class="post-vote-count">1</span>
-                                </a>
-                            </li>
-                            <li class="post-vote-item me-4">
-                                <a href="#" class="post-vote-link" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none;">
-                                    <i class="fa fa-comment"></i>
-                                    <span class="post-vote-count">3</span>
-                                </a>
-                            </li>
-                            <li class="post-vote-item dropdown">
-                                <a href="#" class="post-vote-link dropdown-toggle" a="button" id="postActionsDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none;">
-                                    <i class="fa fa-ellipsis-h"></i>
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="postActionsDropdown">
-                                    <li><span class="dropdown-item">Báo vi phạm</span></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </section>
-                </article>
-                <article class="border p-3 mb-3">
-                    <!-- Phần 1: Thông tin tài khoản -->
-                    <div class="account-frame d-flex" style="max-height: 40px;">
-                        <img src="~/Images/Users/1385117.jpg" width="40" height="40" alt="Avatar" class="avatar me-3">
-                        <div class="user-info">
-                            <h6 class="mb-0" style="opacity: 0.5;">Akkay</h6>
-                            <span class="timestamp" style="opacity: 0.5;">Cách đây 5 phút</span>
-                        </div>
-                        <div class="user-level d-flex align-items-center justify-content-center rounded bg-primary text-white" style="width: 60px; height: 30px;">
-                            <div class="level-info">
-                                <span class="user-level-text">Cấp 5</span>
+                            <div class="user-level d-flex align-items-center justify-content-center rounded bg-primary text-white" style="width: 60px; height: 30px;">
+                                <div class="level-info">
+                                    <span class="user-level-text">Cấp @baiViet.NguoiDung.CapDo</span>
+                                </div>
                             </div>
+                            <span class="category text-opacity">@baiViet.DanhMuc.TenDanhMuc</span>
                         </div>
-                        <span class="category" style="margin-left: 20px; opacity: 0.7;">Thư giãn - Chém gió</span>
-                    </div>
 
-                    <!-- Phần 2: Tiêu đề nội dung đăng -->
-                    <h2 class="mt-3">Tiêu đề bài viết</h2>
-                    <p>Nội dung bài viết...</p>
+                        <h2 class="mt-3">@baiViet.TieuDe</h2>
+                        <p>@baiViet.NoiDung</p>
 
-                    <!-- Phần 3: Ảnh đăng -->
-                    <figure class="mt-3">
-                        <img src="~/Images/Chats/2-thi-ghk1.jpg" alt="Mô tả ảnh" class="img-fluid">
-                    </figure>
+                        <figure class="mt-3">
+                            <img src="~/Images/UserImagePost/@baiViet.HinhAnh" alt="Mô tả ảnh" class="img-fluid">
+                        </figure>
 
-                    <!-- Phần 4: Footer của bài viết -->
-                    <section class="post-footer mt-3">
-                        <ul class="post-vote list-unstyled d-flex">
-                            <li class="post-vote-item me-4">
-                                <a href="#" class="post-vote-link" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none;">
-                                    <i class="fa fa-thumbs-up"></i>
-                                    <span class="post-vote-count">1</span>
-                                </a>
-                            </li>
-                            <li class="post-vote-item me-4">
-                                <a href="#" class="post-vote-link" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none;">
-                                    <i class="fa fa-thumbs-down"></i>
-                                    <span class="post-vote-count">1</span>
-                                </a>
-                            </li>
-                            <li class="post-vote-item me-4">
-                                <a href="#" class="post-vote-link" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none;">
-                                    <i class="fa fa-comment"></i>
-                                    <span class="post-vote-count">3</span>
-                                </a>
-                            </li>
-                            <li class="post-vote-item dropdown">
-                                <a href="#" class="post-vote-link dropdown-toggle" a="button" id="postActionsDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none;">
-                                    <i class="fa fa-ellipsis-h"></i>
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="postActionsDropdown">
-                                    <li><span class="dropdown-item">Báo vi phạm</span></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </section>
-                </article>
-                <!-- Thêm các article khác tương tự cho các bài viết khác -->
+                        <section class="post-footer mt-3">
+                            <ul class="post-vote list-unstyled d-flex">
+                                <li class="post-vote-item me-4">
+                                    <a href="#" class="post-vote-link" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none;">
+                                        <i class="fa fa-thumbs-up"></i>
+                                        <span class="post-vote-count">1</span>
+                                    </a>
+                                </li>
+                                <li class="post-vote-item me-4">
+                                    <a href="#" class="post-vote-link" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none;">
+                                        <i class="fa fa-thumbs-down"></i>
+                                        <span class="post-vote-count">1</span>
+                                    </a>
+                                </li>
+                                <li class="post-vote-item me-4">
+                                    <a href="#" class="post-vote-link" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none;">
+                                        <i class="fa fa-comment"></i>
+                                        <span class="post-vote-count">3</span>
+                                    </a>
+                                </li>
+                                <li class="post-vote-item dropdown">
+                                    <a href="#" class="post-vote-link dropdown-toggle" a="button" id="postActionsDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none;">
+                                        <i class="fa fa-ellipsis-h"></i>
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="postActionsDropdown">
+                                        <li><span class="dropdown-item">Báo vi phạm</span></li>
+                                        <!-- Thêm các nút khác tương tự -->
+                                    </ul>
+                                </li>
+                            </ul>
+                        </section>
+                    </article>
+                }
             </section>
         </div>
         <div class="col-md-4">
             <h2>Top thành viên</h2>
             <ul class="list-group top-members-list">
-                <li class="list-group-item top-member d-flex">
-                    <div class="rank me-3"><h3 style="max-height: 30px; color: #00ffff;">01</h3></div>
-                    <div class="user-image">
-                        <img src="~/Images/Users/1385117.jpg" width="60" height="60" alt="Ảnh thành viên 1">
-                    </div>
-                    <div class="user-info d-flex align-items-center">
-                        <div class="user-details">
-                            <h5 class="user-name text-truncate">Akkay</h5>
-                            <span class="user-level d-flex align-items-center justify-content-center rounded bg-primary text-white" style="width: 60px; max-height: 30px;">Cấp 5</span>
+                @for (var i = 0; i < ViewBag.TopThanhVien.Count; i++)
+                {
+                    var thanhVien = ViewBag.TopThanhVien[i];
+                    <li class="list-group-item top-member d-flex">
+                        <div class="rank me-3"><h3 style="max-height: 30px; color: #00ffff;">@($"{i + 1:00}")</h3></div>
+                        <div class="user-image">
+                            <img src="~/Images/UserAvatar/@thanhVien.Avatar" width="60" height="60" alt="Ảnh thành viên @(i + 1)">
                         </div>
-                    </div>
-                </li>
-                <li class="list-group-item top-member d-flex">
-                    <div class="rank me-3"><h3 style="max-height: 30px; color: #00ff21;">02</h3></div>
-                    <div class="user-image">
-                        <img src="~/Images/Users/994571.jpg" width="60" height="60" alt="Ảnh thành viên 2">
-                    </div>
-                    <div class="user-info d-flex align-items-center">
-                        <div class="user-details">
-                            <h5 class="user-name text-truncate">Liệt Dương Công Tử</h5>
-                            <span class="user-level d-flex align-items-center justify-content-center rounded bg-primary text-white" style="width: 60px; max-height: 30px;">Cấp 5</span>
+                        <div class="user-info d-flex align-items-center">
+                            <div class="user-details">
+                                <h5 class="user-name text-truncate">@thanhVien.TenNguoiDung</h5>
+                                <span class="user-level d-flex align-items-center justify-content-center rounded bg-primary text-white" style="width: 60px; max-height: 30px;">Cấp @thanhVien.CapDo</span>
+                            </div>
                         </div>
-                    </div>
-                </li>
-                <li class="list-group-item top-member d-flex">
-                    <div class="rank me-3"><h3 style="max-height: 30px; color: #ff6a00;">03</h3></div>
-                    <div class="user-image">
-                        <img src="~/Images/Users/1326444.jpg" width="60" height="60" alt="Ảnh thành viên 3">
-                    </div>
-                    <div class="user-info d-flex align-items-center">
-                        <div class="user-details">
-                            <h5 class="user-name text-truncate">Dương Quá</h5>
-                            <span class="user-level d-flex align-items-center justify-content-center rounded bg-primary text-white" style="width: 60px; max-height: 30px;">Cấp 5</span>
-                        </div>
-                    </div>
-                </li>
-                <!-- Thêm các thành viên khác tương tự -->
+                    </li>
+                }
             </ul>
         </div>
     </div>
 </div>
+
+@helper CalculateTimeDifference(DateTime thoiGianGui)
+{
+    var currentTime = DateTime.Now;
+    var timeDifference = currentTime - thoiGianGui;
+
+    string result;
+
+    if (timeDifference.TotalMinutes < 1)
+    {
+        result = "Vừa xong";
+    }
+    else if (timeDifference.TotalMinutes < 60)
+    {
+        result = $"{(int)timeDifference.TotalMinutes} phút trước";
+    }
+    else if (timeDifference.TotalHours < 24)
+    {
+        result = $"{(int)timeDifference.TotalHours} giờ trước";
+    }
+    else
+    {
+        var days = (int)timeDifference.TotalDays;
+        result = $"Cách đây {days} ngày trước";
+    }
+
+    @result
+}

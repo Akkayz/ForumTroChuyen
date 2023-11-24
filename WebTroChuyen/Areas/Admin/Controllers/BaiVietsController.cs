@@ -12,7 +12,7 @@ namespace WebTroChuyen.Areas.Admin.Controllers
 {
     public class BaiVietsController : Controller
     {
-        private ForumTroChuyenEntities db = new ForumTroChuyenEntities();
+        private readonly ForumTroChuyenEntities db = new ForumTroChuyenEntities();
 
         // GET: Admin/BaiViets
         public ActionResult Index(string trangThai)

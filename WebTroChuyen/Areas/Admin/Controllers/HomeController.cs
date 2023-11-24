@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace WebTroChuyen.Areas.Admin.Controllers
 {
-    public class HomeControllerController : Controller
+    public class HomeController : Controller
     {
         // GET: Admin/HomeController
         public ActionResult Index()

@@ -38,6 +38,7 @@ namespace WebTroChuyen.Models
         public virtual DbSet<HoatDongNguoiDung> HoatDongNguoiDungs { get; set; }
         public virtual DbSet<Like> Likes { get; set; }
         public virtual DbSet<NguoiDung> NguoiDungs { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<VaiTro> VaiTroes { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)

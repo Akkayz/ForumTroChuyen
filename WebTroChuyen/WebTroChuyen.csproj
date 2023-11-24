@@ -140,7 +140,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\BaiVietsController.cs" />
-    <Compile Include="Areas\Admin\Controllers\HomeControllerController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="ChatHub.cs" />
     <Compile Include="Controllers\BaiVietController.cs" />
     <Compile Include="Controllers\DangBaiController.cs" />
@@ -235,14 +235,21 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Icon\BeeChat.svg" />
-    <Content Include="Images\BeeChat.png" />
+    <Content Include="Images\UserAvatar\AvatarCat.jpg" />
     <Content Include="Images\UserAvatar\FrogPepe.png" />
-    <Content Include="Images\UserImagePost\2-thi-ghk1.jpg" />
-    <Content Include="Images\logo-netchuyen.png" />
     <Content Include="Images\Logo\FrogPepe.png" />
     <Content Include="Images\UserAvatar\1326444.jpg" />
     <Content Include="Images\UserAvatar\1385117.jpg" />
     <Content Include="Images\UserAvatar\994571.jpg" />
+    <Content Include="Images\UserImagePost\0ab35a65-290f-40da-880c-5a59d16f7622.png" />
+    <Content Include="Images\UserImagePost\2-thi-ghk1.jpg" />
+    <Content Include="Images\UserImagePost\33de2bbf-4c98-4a07-b0b7-688b6a253313.jpg" />
+    <Content Include="Images\UserImagePost\5c107b8b-3bca-4221-8a1a-478b2edc0a67.png" />
+    <Content Include="Images\UserImagePost\84602c34-86ea-4535-aabf-88adf7dbdfe2.png" />
+    <Content Include="Images\UserImagePost\85730d38-b6be-48d7-a6d7-37414ebc71d1.png" />
+    <Content Include="Images\UserImagePost\a24705da-72e4-4839-8050-5a99553cd3cb.jpg" />
+    <Content Include="Images\UserImagePost\b480d486-8769-4c7d-a7a2-78ffef201efd.jpg" />
+    <Content Include="Images\UserImagePost\fa5cd09d-e763-45ec-a995-ce83d7dcd2d8.jpg" />
     <Content Include="Models\DbForumTroChuyen.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DbForumTroChuyen.edmx</DependentUpon>
@@ -316,7 +323,7 @@
     <Content Include="Areas\Admin\Views\BaiViets\Details.cshtml" />
     <Content Include="Areas\Admin\Views\BaiViets\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\BaiViets\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\HomeController\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
