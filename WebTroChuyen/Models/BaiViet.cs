@@ -30,6 +30,8 @@ namespace WebTroChuyen.Models
         public int DanhMucID { get; set; }
         public string HinhAnh { get; set; }
         public bool TrangThai { get; set; }
+        public Nullable<int> LuotThich { get; set; }
+        public Nullable<int> LuotKhongThich { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Dislike> Dislikes { get; set; }

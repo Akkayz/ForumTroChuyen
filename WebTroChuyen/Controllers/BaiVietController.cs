@@ -13,7 +13,9 @@ namespace WebTroChuyen.Controllers
 
         public ActionResult BaiViet()
         {
-            var danhSachBaiViet = db.BaiViets.ToList();
+            var danhSachBaiViet = db.BaiViets
+            .Where(bv => bv.TrangThai)
+            .ToList();
             var topThanhVien = db.NguoiDungs
                 .OrderByDescending(u => u.CapDo)
                 .Take(5)

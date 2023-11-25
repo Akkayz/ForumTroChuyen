@@ -17,6 +17,8 @@
           <Property Name="DanhMucID" Type="int" Nullable="false" />
           <Property Name="HinhAnh" Type="nvarchar" MaxLength="255" />
           <Property Name="TrangThai" Type="bit" Nullable="false" />
+          <Property Name="LuotThich" Type="int" />
+          <Property Name="LuotKhongThich" Type="int" />
         </EntityType>
         <EntityType Name="BinhLuan">
           <Key>
@@ -510,6 +512,8 @@
           <NavigationProperty Name="DanhMuc" Relationship="ForumTroChuyenModel.FK_BaiViet_DanhMuc" FromRole="BaiViet" ToRole="DanhMuc" />
           <NavigationProperty Name="NguoiDung" Relationship="ForumTroChuyenModel.FK_BaiViet_NguoiDung" FromRole="BaiViet" ToRole="NguoiDung" />
           <NavigationProperty Name="BinhLuans" Relationship="ForumTroChuyenModel.FK_BinhLuan_BaiViet" FromRole="BaiViet" ToRole="BinhLuan" />
+          <Property Name="LuotThich" Type="Int32" />
+          <Property Name="LuotKhongThich" Type="Int32" />
         </EntityType>
         <EntityType Name="BinhLuan">
           <Key>
@@ -830,6 +834,8 @@
           <EntitySetMapping Name="BaiViets">
             <EntityTypeMapping TypeName="ForumTroChuyenModel.BaiViet">
               <MappingFragment StoreEntitySet="BaiViet">
+                <ScalarProperty Name="LuotKhongThich" ColumnName="LuotKhongThich" />
+                <ScalarProperty Name="LuotThich" ColumnName="LuotThich" />
                 <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
                 <ScalarProperty Name="HinhAnh" ColumnName="HinhAnh" />
                 <ScalarProperty Name="DanhMucID" ColumnName="DanhMucID" />
