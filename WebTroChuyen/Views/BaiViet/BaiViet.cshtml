@@ -22,8 +22,18 @@
                             break;
                         }
                     }
-
+                    var existingDislike = null as Dislike;
+                    foreach (var dislike in baiViet.Dislikes)
+                    {
+                        if (dislike.UserID == userId)
+                        {
+                            existingDislike = dislike;
+                            break;
+                        }
+                    }
                     var existingLikeCss = existingLike != null ? "red" : "blue";
+
+                    var existingDislikeCss = existingDislike != null ? "red" : "blue";
 
                     <article class="border p-3 mb-3">
                         <div class="account-frame d-flex" style="max-height: 40px;">
@@ -56,11 +66,12 @@
                                     </a>
                                 </li>
                                 <li class="post-vote-item me-4">
-                                    <a href="#" class="post-vote-link" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none;">
-                                        <i class="fa fa-thumbs-down"></i>
-                                        <span class="post-vote-count">@baiViet.LuotKhongThich</span>
+                                    <a href="#" class="post-vote-link" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none;" onclick="dislikeBaiViet(@baiViet.BaiVietID, @userId)">
+                                        <i class="fa fa-thumbs-down" id="dislikeButton@baiViet.BaiVietID" style="color: @existingDislikeCss;"></i>
+                                        <span class="post-vote-count" id="luotKhongThich@baiViet.BaiVietID">@baiViet.LuotKhongThich</span>
                                     </a>
                                 </li>
+
                                 <li class="post-vote-item me-4">
                                     <a href="#" class="post-vote-link" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none;">
                                         <i class="fa fa-comment"></i>
@@ -148,4 +159,20 @@
             }
         });
     }
+    function dislikeBaiViet(baiVietID, userID) {
+    $.ajax({
+        url: '@Url.Action("DislikeBaiViet", "BaiViet")',
+        type: 'POST',
+        data: { baiVietID: baiVietID, userID: userID },
+        success: function (result) {
+            if (result.success) {
+                $(`#dislikeButton${baiVietID}`).css('color', result.daDislike ? 'red' : 'blue');
+                $(`#luotKhongThich${baiVietID}`).text(result.luotKhongThich);
+            }
+        },
+        error: function (error) {
+            console.error(error);
+        }
+    });
+}
 </script>

@@ -81,5 +81,49 @@ namespace WebTroChuyen.Controllers
                 return Json(new { success = false, message = $"Đã xảy ra lỗi: {ex.Message}" });
             }
         }
+
+        [HttpPost]
+        public ActionResult DislikeBaiViet(int baiVietID)
+        {
+            var userId = Session["UserID"] as int? ?? 0;
+
+            if (userId == 0)
+            {
+                return Json(new { success = false, message = "Bạn cần đăng nhập để không thích bài viết." });
+            }
+
+            var existingDislike = db.Dislikes
+                .FirstOrDefault(d => d.BaiVietID == baiVietID && d.UserID == userId);
+
+            var baiViet = db.BaiViets.Find(baiVietID);
+
+            if (existingDislike == null)
+            {
+                var newDislike = new Dislike
+                {
+                    BaiVietID = baiVietID,
+                    UserID = userId
+                };
+
+                db.Dislikes.Add(newDislike);
+                baiViet.LuotKhongThich = (baiViet.LuotKhongThich ?? 0) + 1;
+            }
+            else
+            {
+                db.Dislikes.Remove(existingDislike);
+                baiViet.LuotKhongThich = (baiViet.LuotKhongThich ?? 0) - 1;
+            }
+
+            db.SaveChanges();
+
+            var result = new
+            {
+                success = true,
+                luotKhongThich = baiViet.LuotKhongThich,
+                daDislike = existingDislike != null
+            };
+
+            return Json(result);
+        }
     }
 }
