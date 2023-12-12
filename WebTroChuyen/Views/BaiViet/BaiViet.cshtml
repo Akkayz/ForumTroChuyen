@@ -59,12 +59,15 @@
 
                         <section class="post-footer mt-3">
                             <ul class="post-vote list-unstyled d-flex">
+                                <!-- Trong phần tương ứng với nút like -->
                                 <li class="post-vote-item me-4">
                                     <a href="#" class="post-vote-link" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none; color: @existingLikeCss;" onclick="likeBaiViet(@baiViet.BaiVietID, @userId)">
                                         <i class="fa fa-thumbs-up"></i>
                                         <span class="post-vote-count" id="luotThich@baiViet.BaiVietID">@baiViet.LuotThich</span>
                                     </a>
                                 </li>
+
+                                <!-- Trong phần tương ứng với nút dislike -->
                                 <li class="post-vote-item me-4">
                                     <a href="#" class="post-vote-link" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none;" onclick="dislikeBaiViet(@baiViet.BaiVietID, @userId)">
                                         <i class="fa fa-thumbs-down" id="dislikeButton@baiViet.BaiVietID" style="color: @existingDislikeCss;"></i>
