@@ -32,42 +32,54 @@ namespace WebTroChuyen.Controllers
         }
 
         [HttpPost]
-        public ActionResult LikeBaiViet(int baiVietID, int userID)
+        public ActionResult LikeBaiViet(int baiVietID)
         {
-            var existingLike = db.Likes
-                .FirstOrDefault(l => l.BaiVietID == baiVietID && l.UserID == userID);
+            var userId = Session["UserID"] as int?;
 
-            var baiViet = db.BaiViets.Find(baiVietID);
-
-            if (existingLike == null)
+            if (!userId.HasValue)
             {
-                // Thêm like
-                var newLike = new Like
+                return Json(new { success = false, message = "Bạn cần đăng nhập để thích bài viết." });
+            }
+
+            try
+            {
+                var existingLike = db.Likes
+                    .FirstOrDefault(l => l.BaiVietID == baiVietID && l.UserID == userId);
+
+                var baiViet = db.BaiViets.Find(baiVietID);
+
+                if (existingLike == null)
                 {
-                    BaiVietID = baiVietID,
-                    UserID = userID
+                    var newLike = new Like
+                    {
+                        BaiVietID = baiVietID,
+                        UserID = userId.Value
+                    };
+
+                    db.Likes.Add(newLike);
+                    baiViet.LuotThich = (baiViet.LuotThich ?? 0) + 1;
+                }
+                else
+                {
+                    db.Likes.Remove(existingLike);
+                    baiViet.LuotThich = (baiViet.LuotThich ?? 0) - 1;
+                }
+
+                db.SaveChanges();
+
+                var result = new
+                {
+                    success = true,
+                    luotThich = baiViet.LuotThich,
+                    daLike = existingLike != null
                 };
 
-                db.Likes.Add(newLike);
-                baiViet.LuotThich = (baiViet.LuotThich ?? 0) + 1;
+                return Json(result);
             }
-            else
+            catch (Exception ex)
             {
-                // Xoá like
-                db.Likes.Remove(existingLike);
-                baiViet.LuotThich = (baiViet.LuotThich ?? 0) - 1;
+                return Json(new { success = false, message = $"Đã xảy ra lỗi: {ex.Message}" });
             }
-
-            db.SaveChanges();
-
-            var result = new
-            {
-                success = true,
-                luotThich = baiViet.LuotThich,
-                daLike = existingLike != null
-            };
-
-            return Json(result);
         }
     }
 }

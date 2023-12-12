@@ -2,28 +2,13 @@
 @using WebTroChuyen.Models
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "BaiViet";
     Layout = "~/Views/Shared/_LayoutTrangChu.cshtml";
 }
 
 <div class="container bg-white" style="max-width: 1000px;">
     <div class="row">
         <div class="col-md-8">
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Mới</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Bình luận mới</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Top yêu thích</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Top bình luận</a>
-                </li>
-            </ul>
-            <div style="margin-bottom: 20px;"></div> <!-- Khoảng cách giữa danh sách và bài viết -->
             <section class="list-view">
                 @foreach (var baiViet in ViewBag.DanhSachBaiViet)
                 {
@@ -65,14 +50,13 @@
                         <section class="post-footer mt-3">
                             <ul class="post-vote list-unstyled d-flex">
                                 <li class="post-vote-item me-4">
-                                    <a href="#" class="post-vote-link" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none; color: @existingLikeCss;">
+                                    <a href="#" class="post-vote-link" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none; color: @existingLikeCss;" onclick="likeBaiViet(@baiViet.BaiVietID, @userId)">
                                         <i class="fa fa-thumbs-up"></i>
-                                        <span class="post-vote-count">@baiViet.LuotThich</span>
+                                        <span class="post-vote-count" id="luotThich@baiViet.BaiVietID">@baiViet.LuotThich</span>
                                     </a>
                                 </li>
                                 <li class="post-vote-item me-4">
                                     <a href="#" class="post-vote-link" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none;">
-                                        <!--nút Dislike-->
                                         <i class="fa fa-thumbs-down"></i>
                                         <span class="post-vote-count">@baiViet.LuotKhongThich</span>
                                     </a>
@@ -89,7 +73,6 @@
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="postActionsDropdown">
                                         <li><span class="dropdown-item">Báo vi phạm</span></li>
-                                        <!-- Thêm các nút khác tương tự -->
                                     </ul>
                                 </li>
                             </ul>
@@ -121,7 +104,6 @@
         </div>
     </div>
 </div>
-
 @helper CalculateTimeDifference(DateTime thoiGianGui)
 {
     var currentTime = DateTime.Now;
@@ -149,3 +131,21 @@
 
     @result
 }
+<script>
+    function likeBaiViet(baiVietID, userID) {
+        $.ajax({
+            url: '@Url.Action("LikeBaiViet", "BaiViet")',
+            type: 'POST',
+            data: { baiVietID: baiVietID, userID: userID },
+            success: function (result) {
+                if (result.success) {
+                    $(`#likeButton${baiVietID}`).css('color', result.daLike ? 'red' : 'blue');
+                    $(`#luotThich${baiVietID}`).text(result.luotThich);
+                }
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
+    }
+</script>
