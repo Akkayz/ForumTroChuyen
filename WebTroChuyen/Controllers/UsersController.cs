@@ -179,7 +179,7 @@ namespace WebTroChuyen.Controllers
             Session.RemoveAll();
 
             // Điều hướng người dùng đến trang chính hoặc bất kỳ trang nào bạn muốn
-            return RedirectToAction("Index", "DangBai"); // Ví dụ: điều hướng đến trang chính của ứng dụng
+            return RedirectToAction("DangBai", "DangBai"); // Ví dụ: điều hướng đến trang chính của ứng dụng
         }
 
         private bool IsValidEmail(string email)
