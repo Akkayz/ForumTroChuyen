@@ -61,15 +61,14 @@
                             <ul class="post-vote list-unstyled d-flex">
                                 <!-- Trong phần tương ứng với nút like -->
                                 <li class="post-vote-item me-4">
-                                    <a href="#" class="post-vote-link" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none; color: @existingLikeCss;" onclick="likeBaiViet(@baiViet.BaiVietID, @userId)">
+                                    <a href="#" class="post-vote-link" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none; color: @existingLikeCss;" onclick="toggleReaction(@baiViet.BaiVietID, true)">
                                         <i class="fa fa-thumbs-up"></i>
                                         <span class="post-vote-count" id="luotThich@baiViet.BaiVietID">@baiViet.LuotThich</span>
                                     </a>
                                 </li>
 
-                                <!-- Trong phần tương ứng với nút dislike -->
                                 <li class="post-vote-item me-4">
-                                    <a href="#" class="post-vote-link" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none;" onclick="dislikeBaiViet(@baiViet.BaiVietID, @userId)">
+                                    <a href="#" class="post-vote-link" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none;" onclick="toggleReaction(@baiViet.BaiVietID, false)">
                                         <i class="fa fa-thumbs-down" id="dislikeButton@baiViet.BaiVietID" style="color: @existingDislikeCss;"></i>
                                         <span class="post-vote-count" id="luotKhongThich@baiViet.BaiVietID">@baiViet.LuotKhongThich</span>
                                     </a>
@@ -146,15 +145,17 @@
     @result
 }
 <script>
-    function likeBaiViet(baiVietID, userID) {
+    function toggleReaction(baiVietID, isLike) {
         $.ajax({
-            url: '@Url.Action("LikeBaiViet", "BaiViet")',
+            url: '@Url.Action("ToggleReaction", "BaiViet")',
             type: 'POST',
-            data: { baiVietID: baiVietID, userID: userID },
+            data: { baiVietID: baiVietID, isLike: isLike },
             success: function (result) {
                 if (result.success) {
                     $(`#likeButton${baiVietID}`).css('color', result.daLike ? 'red' : 'blue');
+                    $(`#dislikeButton${baiVietID}`).css('color', result.daDislike ? 'red' : 'blue');
                     $(`#luotThich${baiVietID}`).text(result.luotThich);
+                    $(`#luotKhongThich${baiVietID}`).text(result.luotKhongThich);
                 }
             },
             error: function (error) {
@@ -162,20 +163,4 @@
             }
         });
     }
-    function dislikeBaiViet(baiVietID, userID) {
-    $.ajax({
-        url: '@Url.Action("DislikeBaiViet", "BaiViet")',
-        type: 'POST',
-        data: { baiVietID: baiVietID, userID: userID },
-        success: function (result) {
-            if (result.success) {
-                $(`#dislikeButton${baiVietID}`).css('color', result.daDislike ? 'red' : 'blue');
-                $(`#luotKhongThich${baiVietID}`).text(result.luotKhongThich);
-            }
-        },
-        error: function (error) {
-            console.error(error);
-        }
-    });
-}
 </script>

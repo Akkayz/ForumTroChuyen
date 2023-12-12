@@ -32,7 +32,7 @@ namespace WebTroChuyen.Controllers
         }
 
         [HttpPost]
-        public ActionResult LikeBaiViet(int baiVietID)
+        public ActionResult ToggleReaction(int baiVietID, bool isLike)
         {
             var userId = Session["UserID"] as int? ?? 0;
 
@@ -49,35 +49,71 @@ namespace WebTroChuyen.Controllers
 
             var baiViet = db.BaiViets.Find(baiVietID);
 
-            if (existingLike == null && existingDislike == null)
+            if (isLike)
             {
-                var newLike = new Like
+                if (existingLike == null && existingDislike == null)
                 {
-                    BaiVietID = baiVietID,
-                    UserID = userId
-                };
+                    var newLike = new Like
+                    {
+                        BaiVietID = baiVietID,
+                        UserID = userId
+                    };
 
-                db.Likes.Add(newLike);
-                baiViet.LuotThich = (baiViet.LuotThich ?? 0) + 1;
-            }
-            else if (existingLike != null)
-            {
-                db.Likes.Remove(existingLike);
-                baiViet.LuotThich = (baiViet.LuotThich ?? 0) - 1;
-            }
-            else if (existingDislike != null)
-            {
-                db.Dislikes.Remove(existingDislike);
-                baiViet.LuotKhongThich = (baiViet.LuotKhongThich ?? 0) - 1;
-
-                var newLike = new Like
+                    db.Likes.Add(newLike);
+                    baiViet.LuotThich = (baiViet.LuotThich ?? 0) + 1;
+                }
+                else if (existingLike != null)
                 {
-                    BaiVietID = baiVietID,
-                    UserID = userId
-                };
+                    db.Likes.Remove(existingLike);
+                    baiViet.LuotThich = (baiViet.LuotThich ?? 0) - 1;
+                }
+                else if (existingDislike != null)
+                {
+                    db.Dislikes.Remove(existingDislike);
+                    baiViet.LuotKhongThich = (baiViet.LuotKhongThich ?? 0) - 1;
 
-                db.Likes.Add(newLike);
-                baiViet.LuotThich = (baiViet.LuotThich ?? 0) + 1;
+                    var newLike = new Like
+                    {
+                        BaiVietID = baiVietID,
+                        UserID = userId
+                    };
+
+                    db.Likes.Add(newLike);
+                    baiViet.LuotThich = (baiViet.LuotThich ?? 0) + 1;
+                }
+            }
+            else // Dislike
+            {
+                if (existingDislike == null && existingLike == null)
+                {
+                    var newDislike = new Dislike
+                    {
+                        BaiVietID = baiVietID,
+                        UserID = userId
+                    };
+
+                    db.Dislikes.Add(newDislike);
+                    baiViet.LuotKhongThich = (baiViet.LuotKhongThich ?? 0) + 1;
+                }
+                else if (existingDislike != null)
+                {
+                    db.Dislikes.Remove(existingDislike);
+                    baiViet.LuotKhongThich = (baiViet.LuotKhongThich ?? 0) - 1;
+                }
+                else if (existingLike != null)
+                {
+                    db.Likes.Remove(existingLike);
+                    baiViet.LuotThich = (baiViet.LuotThich ?? 0) - 1;
+
+                    var newDislike = new Dislike
+                    {
+                        BaiVietID = baiVietID,
+                        UserID = userId
+                    };
+
+                    db.Dislikes.Add(newDislike);
+                    baiViet.LuotKhongThich = (baiViet.LuotKhongThich ?? 0) + 1;
+                }
             }
 
             db.SaveChanges();
@@ -86,67 +122,8 @@ namespace WebTroChuyen.Controllers
             {
                 success = true,
                 luotThich = baiViet.LuotThich,
-                daLike = existingLike != null
-            };
-
-            return Json(result);
-        }
-
-        [HttpPost]
-        public ActionResult DislikeBaiViet(int baiVietID)
-        {
-            var userId = Session["UserID"] as int? ?? 0;
-
-            if (userId == 0)
-            {
-                return Json(new { success = false, message = "Bạn cần đăng nhập để không thích bài viết." });
-            }
-
-            var existingLike = db.Likes
-                .FirstOrDefault(l => l.BaiVietID == baiVietID && l.UserID == userId);
-
-            var existingDislike = db.Dislikes
-                .FirstOrDefault(d => d.BaiVietID == baiVietID && d.UserID == userId);
-
-            var baiViet = db.BaiViets.Find(baiVietID);
-
-            if (existingDislike == null && existingLike == null)
-            {
-                var newDislike = new Dislike
-                {
-                    BaiVietID = baiVietID,
-                    UserID = userId
-                };
-
-                db.Dislikes.Add(newDislike);
-                baiViet.LuotKhongThich = (baiViet.LuotKhongThich ?? 0) + 1;
-            }
-            else if (existingDislike != null)
-            {
-                db.Dislikes.Remove(existingDislike);
-                baiViet.LuotKhongThich = (baiViet.LuotKhongThich ?? 0) - 1;
-            }
-            else if (existingLike != null)
-            {
-                db.Likes.Remove(existingLike);
-                baiViet.LuotThich = (baiViet.LuotThich ?? 0) - 1;
-
-                var newDislike = new Dislike
-                {
-                    BaiVietID = baiVietID,
-                    UserID = userId
-                };
-
-                db.Dislikes.Add(newDislike);
-                baiViet.LuotKhongThich = (baiViet.LuotKhongThich ?? 0) + 1;
-            }
-
-            db.SaveChanges();
-
-            var result = new
-            {
-                success = true,
                 luotKhongThich = baiViet.LuotKhongThich,
+                daLike = existingLike != null,
                 daDislike = existingDislike != null
             };
 
