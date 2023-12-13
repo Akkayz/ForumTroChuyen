@@ -139,7 +139,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\BaiVietBaoCaosController.cs" />
     <Compile Include="Areas\Admin\Controllers\BaiVietsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BinhLuansController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\NguoiDungsController.cs" />
     <Compile Include="ChatHub.cs" />
@@ -330,6 +332,17 @@
     <Content Include="Areas\Admin\Views\NguoiDungs\Details.cshtml" />
     <Content Include="Areas\Admin\Views\NguoiDungs\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\NguoiDungs\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\BaiVietBaoCaos\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\BaiVietBaoCaos\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\BaiVietBaoCaos\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\BaiVietBaoCaos\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\BaiVietBaoCaos\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\BaiVietBaoCaos\ChiTietBaiViet.cshtml" />
+    <Content Include="Areas\Admin\Views\BinhLuans\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\BinhLuans\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\BinhLuans\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\BinhLuans\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\BinhLuans\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />

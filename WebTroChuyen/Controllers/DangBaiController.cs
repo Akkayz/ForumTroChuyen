@@ -92,7 +92,7 @@ namespace WebTroChuyen.Controllers
                 db.BaiViets.Add(model);
                 db.SaveChanges();
 
-                return RedirectToAction("BaiViet", "BaiViet");
+                return RedirectToAction("Index", "BaiViet");
             }
             else
             {

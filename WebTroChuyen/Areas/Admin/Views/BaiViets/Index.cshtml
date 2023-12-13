@@ -9,6 +9,12 @@
     <h2>Quản lý bài viết</h2>
     <form method="get" action="@Url.Action("Index", "BaiViets", new { area = "Admin" })">
         <div class="mb-3">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Nhập từ khóa tìm kiếm" name="keyword" />
+                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+            </div>
+        </div>
+        <div class="mb-3">
             <label for="trangThai" class="form-label">Lọc theo trạng thái:</label>
             <select class="form-select" id="trangThai" name="trangThai">
                 <option value="">Tất cả</option>

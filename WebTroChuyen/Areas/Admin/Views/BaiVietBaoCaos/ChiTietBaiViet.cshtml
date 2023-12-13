@@ -1,0 +1,24 @@
+﻿@model WebTroChuyen.Models.BaiViet
+@{
+    ViewBag.Title = "ChiTietBaiViet";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>@Model.TieuDe</h2>
+
+<div>
+    <p>BaiVietID: @Model.BaiVietID</p>
+    <p>@Model.NoiDung</p>
+    <p>Ngày Đăng: @Model.NgayDang</p>
+    <p>Tác Giả: @Model.NguoiDung.TenNguoiDung</p>
+    <p>Danh Mục: @Model.DanhMuc.TenDanhMuc</p>
+    <p>Trạng Thái: @(Model.TrangThai ? "Hiển Thị" : "Ẩn")</p>
+    <p>Số Lượt Thích: @Model.LuotThich</p>
+    <p>Số Lượt Không Thích: @Model.LuotKhongThich</p>
+
+    <!-- Hiển thị ảnh (nếu có) -->
+    @if (!string.IsNullOrEmpty(Model.HinhAnh))
+    {
+        <img src="@Url.Content($"~/Images/UserImagePost/{Model.HinhAnh}")" alt="Ảnh đính kèm" class="img-fluid">
+    }
+</div>

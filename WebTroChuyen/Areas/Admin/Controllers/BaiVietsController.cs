@@ -15,15 +15,21 @@ namespace WebTroChuyen.Areas.Admin.Controllers
         private readonly ForumTroChuyenEntities db = new ForumTroChuyenEntities();
 
         // GET: Admin/BaiViets
-        public ActionResult Index(string trangThai)
+        public ActionResult Index(string trangThai, string keyword)
         {
             var baiViets = db.BaiViets.Include(b => b.DanhMuc).Include(b => b.NguoiDung);
 
+            // Lọc theo trạng thái
             if (!string.IsNullOrEmpty(trangThai))
             {
                 bool trangThaiValue = trangThai.ToLower() == "true";
-
                 baiViets = baiViets.Where(b => b.TrangThai == trangThaiValue);
+            }
+
+            // Lọc theo từ khóa
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                baiViets = baiViets.Where(b => b.TieuDe.Contains(keyword) || b.NoiDung.Contains(keyword));
             }
 
             return View(baiViets.ToList());
