@@ -40,11 +40,17 @@
                 <span class="category text-opacity">@baiViet.DanhMuc.TenDanhMuc</span>
             </div>
 
-            <h2 class="mt-3">@baiViet.TieuDe</h2>
+            <h2 class="mt-3">
+                <a href="@Url.Action("XemChiTietBaiViet", "BaiViet", new { baiVietID = baiViet.BaiVietID })">
+                    @baiViet.TieuDe
+                </a>
+            </h2>
             <p>@baiViet.NoiDung</p>
 
             <figure class="mt-3">
-                <img src="~/Images/UserImagePost/@baiViet.HinhAnh" alt="Mô tả ảnh" class="img-fluid">
+                <a href="@Url.Action("XemChiTietBaiViet", "BaiViet", new { baiVietID = baiViet.BaiVietID })">
+                    <img src="~/Images/UserImagePost/@baiViet.HinhAnh" alt="Mô tả ảnh" class="img-fluid">
+                </a>
             </figure>
 
             <section class="post-footer mt-3">

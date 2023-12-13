@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebTroChuyen.Models;
+using System.Data.Entity;
 
 namespace WebTroChuyen.Controllers
 {
@@ -36,6 +37,26 @@ namespace WebTroChuyen.Controllers
             ViewBag.UserId = userId;
             ViewBag.DanhSachBaiViet = danhSachBaiViet;
             return PartialView("");
+        }
+
+        // Add this action to your BaiVietController
+        public ActionResult XemChiTietBaiViet(int baiVietID)
+        {
+            var userId = Session["UserID"] as int? ?? 0;
+
+            // Retrieve the specific post for the given baiVietID
+            var chiTietBaiViet = db.BaiViets
+                .Include(bv => bv.NguoiDung)
+                .Include(bv => bv.DanhMuc)
+                .FirstOrDefault(bv => bv.BaiVietID == baiVietID);
+
+            if (chiTietBaiViet == null)
+            {
+                return HttpNotFound(); // Or handle the case where the post is not found
+            }
+
+            ViewBag.UserId = userId;
+            return View(chiTietBaiViet); // Truyền dữ liệu chiTietBaiViet đến view
         }
 
         [HttpPost]

@@ -1,0 +1,129 @@
+﻿@model WebTroChuyen.Models.BaiViet
+@{
+    ViewBag.Title = "XemChiTietBaiViet";
+    Layout = "~/Views/Shared/_LayoutTrangChu.cshtml";
+}
+
+@{
+    var userId = ViewBag.UserId;
+    var existingLike = Model.Likes.FirstOrDefault(like => like.UserID == userId);
+    var existingDislike = Model.Dislikes.FirstOrDefault(dislike => dislike.UserID == userId);
+    var existingLikeCss = existingLike != null ? "red" : "blue";
+    var existingDislikeCss = existingDislike != null ? "red" : "blue";
+}
+
+<div class="container bg-white" style="max-width: 1000px">
+    <div class="row">
+        <div class="col-md-8">
+            <h2>@Model.TieuDe</h2>
+            <div class="account-frame d-flex">
+                <img src="~/Images/UserAvatar/@Model.NguoiDung.Avatar" width="40" height="40" alt="Avatar" class="avatar me-3">
+                <div class="user-info">
+                    <h6 class="mb-0 text-opacity">@Model.NguoiDung.TenNguoiDung</h6>
+                    <span class="timestamp text-opacity">@CalculateTimeDifference(Model.NgayDang)</span>
+                </div>
+                <div class="user-level d-flex align-items-center justify-content-center rounded bg-primary text-white" style="width: 60px; height: 30px;">
+                    <div class="level-info">
+                        <span class="user-level-text">Cấp @Model.NguoiDung.CapDo</span>
+                    </div>
+                </div>
+                <span class="category text-opacity">@Model.DanhMuc.TenDanhMuc</span>
+            </div>
+
+            <p>@Model.NoiDung</p>
+
+            <figure class="mt-3">
+                <img src="~/Images/UserImagePost/@Model.HinhAnh" alt="Mô tả ảnh" class="img-fluid">
+            </figure>
+
+            <section class="post-footer mt-3">
+                <ul class="post-vote list-unstyled d-flex">
+                    @RenderVoteSection(Model.BaiVietID, existingLikeCss, existingDislikeCss)
+                    <li class="post-vote-item me-4">
+                        <a href="#" class="post-vote-link" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none;">
+                            <i class="fa fa-comment"></i>
+                            <span class="post-vote-count">3</span>
+                        </a>
+                    </li>
+                    <li class="post-vote-item dropdown">
+                        <a href="#" class="post-vote-link dropdown-toggle" a="button" id="postActionsDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none;">
+                            <i class="fa fa-ellipsis-h"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="postActionsDropdown">
+                            <li><span class="dropdown-item">Báo vi phạm</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+        </div>
+        <div class="col-md-4">
+            <!-- Additional details or comments can be displayed here -->
+        </div>
+    </div>
+</div>
+
+@helper RenderVoteSection(int baiVietID, string existingLikeCss, string existingDislikeCss)
+{
+    <li class="post-vote-item me-4">
+        <a href="#" class="post-vote-link" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none; color: @existingLikeCss;" onclick="toggleReaction(@baiVietID, true)">
+            <i class="fa fa-thumbs-up"></i>
+            <span class="post-vote-count" id="luotThich@baiVietID">@Model.LuotThich</span>
+        </a>
+    </li>
+    <li class="post-vote-item me-4">
+        <a href="#" class="post-vote-link" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none; color: @existingDislikeCss;" onclick="toggleReaction(@baiVietID, false)">
+            <i class="fa fa-thumbs-down" id="dislikeButton@baiVietID" style="color: @existingDislikeCss;"></i>
+            <span class="post-vote-count" id="luotKhongThich@baiVietID">@Model.LuotKhongThich</span>
+        </a>
+    </li>
+}
+
+@helper CalculateTimeDifference(DateTime thoiGianGui)
+{
+    var currentTime = DateTime.Now;
+    var timeDifference = currentTime - thoiGianGui;
+
+    string result;
+
+    if (timeDifference.TotalMinutes < 1)
+    {
+        result = "Vừa xong";
+    }
+    else if (timeDifference.TotalMinutes < 60)
+    {
+        result = $"{(int)timeDifference.TotalMinutes} phút trước";
+    }
+    else if (timeDifference.TotalHours < 24)
+    {
+        result = $"{(int)timeDifference.TotalHours} giờ trước";
+    }
+    else
+    {
+        var days = (int)timeDifference.TotalDays;
+        result = $"Cách đây {days} ngày trước";
+    }
+
+    @result
+}
+
+<script>
+    function toggleReaction(baiVietID, isLike) {
+        $.ajax({
+            url: '@Url.Action("ToggleReaction", "BaiViet")',
+            type: 'POST',
+            data: { baiVietID: baiVietID, isLike: isLike },
+            success: function (result) {
+                if (result.success) {
+                    $(`#likeButton${baiVietID}`).css('color', result.daLike ? 'red' : 'blue');
+                    $(`#dislikeButton${baiVietID}`).css('color', result.daDislike ? 'red' : 'blue');
+
+                    $(`#luotThich${baiVietID}`).text(result.luotThich);
+                    $(`#luotKhongThich${baiVietID}`).text(result.luotKhongThich);
+                }
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
+    }
+</script>

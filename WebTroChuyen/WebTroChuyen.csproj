@@ -356,6 +356,7 @@
     <Content Include="Views\DangBai\DangBai.cshtml" />
     <Content Include="Views\BaiViet\Index.cshtml" />
     <Content Include="Views\BaiViet\BaiVietPartial.cshtml" />
+    <Content Include="Views\BaiViet\XemChiTietBaiViet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
