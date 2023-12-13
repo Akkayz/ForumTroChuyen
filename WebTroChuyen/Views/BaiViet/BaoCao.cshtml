@@ -1,0 +1,21 @@
+﻿@model WebTroChuyen.Models.BaoCaoViewModel
+@{
+    ViewBag.Title = "BaoCao";
+    Layout = "~/Views/Shared/_LayoutTrangChu.cshtml";
+}
+
+<h2>Báo Cáo Bài Viết</h2>
+
+@using (Html.BeginForm("BaoCao", "BaiViet", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label for="lyDoBaoCao">Lý do báo cáo:</label>
+        <textarea class="form-control" name="lyDoBaoCao" required></textarea>
+    </div>
+
+    <input type="hidden" name="baiVietID" value="@ViewBag.BaiVietID" />
+
+    <button type="submit" class="btn btn-primary">Gửi Báo Cáo</button>
+}

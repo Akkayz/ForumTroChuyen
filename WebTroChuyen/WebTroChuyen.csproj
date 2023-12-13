@@ -157,6 +157,7 @@
       <DependentUpon>DbForumTroChuyen.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\BaiVietWithCommentsModel.cs" />
+    <Compile Include="Models\BaoCaoViewModel.cs" />
     <Compile Include="Models\BinhLuan.cs">
       <DependentUpon>DbForumTroChuyen.tt</DependentUpon>
     </Compile>
@@ -362,6 +363,7 @@
     <Content Include="Views\BaiViet\Index.cshtml" />
     <Content Include="Views\BaiViet\BaiVietPartial.cshtml" />
     <Content Include="Views\BaiViet\XemChiTietBaiViet.cshtml" />
+    <Content Include="Views\BaiViet\BaoCao.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -83,8 +83,9 @@
                         <a href="#" class="post-vote-link dropdown-toggle" a="button" id="postActionsDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none;">
                             <i class="fa fa-ellipsis-h"></i>
                         </a>
+                        <!-- Bổ sung vào phần tương ứng với nút bạn muốn hiển thị -->
                         <ul class="dropdown-menu" aria-labelledby="postActionsDropdown">
-                            <li><span class="dropdown-item">Báo vi phạm</span></li>
+                            <li><span class="dropdown-item"><a href="@Url.Action("BaoCao", "BaiViet", new { baiVietID = baiViet.BaiVietID })">Báo cáo vi phạm</a></span></li>
                         </ul>
                     </li>
                 </ul>

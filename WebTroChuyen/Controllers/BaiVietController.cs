@@ -242,7 +242,21 @@ namespace WebTroChuyen.Controllers
             return Json(result);
         }
 
+        public ActionResult BaoCao(int baiVietID)
+        {
+            // Kiểm tra xem người dùng đã đăng nhập chưa
+            if (Session["UserID"] == null)
+            {
+                // Chưa đăng nhập, bạn có thể chuyển hướng hoặc xử lý theo ý của bạn
+                return RedirectToAction("DangNhap", "Users");
+            }
+
+            ViewBag.BaiVietID = baiVietID;
+            return View();
+        }
+
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult BaoCao(int baiVietID, string lyDoBaoCao)
         {
             // Kiểm tra xem người dùng đã đăng nhập chưa
@@ -270,8 +284,9 @@ namespace WebTroChuyen.Controllers
             db.SaveChanges();
 
             // Có thể cập nhật thông báo hoặc chuyển hướng người dùng
+            ViewBag.DaBaoCao = true;
 
-            return RedirectToAction("Index"); // Chẳng hạn
+            return RedirectToAction("Index", "BaiViet");
         }
     }
 }
