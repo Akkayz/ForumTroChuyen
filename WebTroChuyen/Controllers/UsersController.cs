@@ -153,20 +153,45 @@ namespace WebTroChuyen.Controllers
 
                 if (user != null)
                 {
-                    Session["UserID"] = user.UserID;
-                    Session["UserName"] = user.UserName;
-                    Session["TenNguoiDung"] = user.TenNguoiDung;
-                    Session["Avatar"] = user.Avatar;
-                    Session["CapDo"] = user.CapDo;
+                    // Kiểm tra TrangThai của tài khoản
+                    if (user.TrangThai == 0)
+                    {
+                        // Gán thông báo vào TempData
+                        TempData["ErrorMessage"] = "Tài khoản đã bị khoá. Vui lòng liên hệ admin.";
 
-                    // Lưu thông tin người dùng vào Context.User.Identity.Name
-                    System.Web.HttpContext.Current.User = new GenericPrincipal(new GenericIdentity(user.UserName), null);
+                        // Trả về view đăng nhập với model
+                        return View("DangNhap", model);
+                    }
+
+                    // Kiểm tra giá trị của VaiTroID
+                    if (user.VaitroID == 2)
+                    {
+                        // Chuyển hướng đến trang khác khi VaiTroID là 2
+                        return RedirectToAction("Index", "Home", new { area = "Admin" });
+                    }
+                    else if (user.VaitroID == 1)
+                    {
+                        Session["UserID"] = user.UserID;
+                        Session["UserName"] = user.UserName;
+                        Session["TenNguoiDung"] = user.TenNguoiDung;
+                        Session["Avatar"] = user.Avatar;
+                        Session["CapDo"] = user.CapDo;
+                        Session["TrangThai"] = user.TrangThai;
+                        Session["VaiTro"] = user.VaitroID;
+
+                        // Lưu thông tin người dùng vào Context.User.Identity.Name
+                        System.Web.HttpContext.Current.User = new GenericPrincipal(new GenericIdentity(user.UserName), null);
+                        // Chuyển hướng đến trang khác khi VaiTroID là 1
+                        return RedirectToAction("Index", "BaiViet");
+                    }
+
+                    // Tiếp tục chuyển hướng đến trang chính nếu không có điều kiện nào được đáp ứng
 
                     return RedirectToAction("Index", "BaiViet");
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Tên đăng nhập hoặc mật khẩu không đúng.");
+                    TempData["ErrorMessage"] = "Tên đăng nhập hoặc mật khẩu không đúng.";
                 }
             }
 

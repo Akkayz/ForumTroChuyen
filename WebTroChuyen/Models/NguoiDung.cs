@@ -18,11 +18,11 @@ namespace WebTroChuyen.Models
         public NguoiDung()
         {
             this.BaiViets = new HashSet<BaiViet>();
+            this.BaiVietBaoCaos = new HashSet<BaiVietBaoCao>();
             this.BinhLuans = new HashSet<BinhLuan>();
             this.Chats = new HashSet<Chat>();
             this.DiemSoNguoiDungs = new HashSet<DiemSoNguoiDung>();
             this.Dislikes = new HashSet<Dislike>();
-            this.HoatDongNguoiDungs = new HashSet<HoatDongNguoiDung>();
             this.Likes = new HashSet<Like>();
         }
     
@@ -42,6 +42,8 @@ namespace WebTroChuyen.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BaiViet> BaiViets { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BaiVietBaoCao> BaiVietBaoCaos { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BinhLuan> BinhLuans { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Chat> Chats { get; set; }
@@ -49,8 +51,6 @@ namespace WebTroChuyen.Models
         public virtual ICollection<DiemSoNguoiDung> DiemSoNguoiDungs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Dislike> Dislikes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HoatDongNguoiDung> HoatDongNguoiDungs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Like> Likes { get; set; }
         public virtual VaiTro VaiTro { get; set; }

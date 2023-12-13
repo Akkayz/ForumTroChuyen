@@ -12,14 +12,16 @@ namespace WebTroChuyen.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class HoatDongNguoiDung
+    public partial class BaiVietBaoCao
     {
         public int ID { get; set; }
+        public Nullable<int> BaiVietID { get; set; }
         public Nullable<int> UserID { get; set; }
-        public Nullable<int> HoatDongID { get; set; }
-        public Nullable<System.DateTime> ThoiGian { get; set; }
+        public string LyDoBaoCao { get; set; }
+        public Nullable<System.DateTime> NgayBaoCao { get; set; }
+        public string TrangThai { get; set; }
     
-        public virtual HoatDong HoatDong { get; set; }
+        public virtual BaiViet BaiViet { get; set; }
         public virtual NguoiDung NguoiDung { get; set; }
     }
 }

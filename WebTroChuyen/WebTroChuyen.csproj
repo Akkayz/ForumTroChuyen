@@ -141,6 +141,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\BaiVietsController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NguoiDungsController.cs" />
     <Compile Include="ChatHub.cs" />
     <Compile Include="Controllers\BaiVietController.cs" />
     <Compile Include="Controllers\DangBaiController.cs" />
@@ -150,6 +151,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BaiViet.cs">
+      <DependentUpon>DbForumTroChuyen.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BaiVietBaoCao.cs">
       <DependentUpon>DbForumTroChuyen.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\BaiVietWithCommentsModel.cs" />
@@ -185,12 +189,6 @@
       <DependentUpon>DbForumTroChuyen.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\HeThongCapDo.cs">
-      <DependentUpon>DbForumTroChuyen.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\HoatDong.cs">
-      <DependentUpon>DbForumTroChuyen.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\HoatDongNguoiDung.cs">
       <DependentUpon>DbForumTroChuyen.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Like.cs">
@@ -326,6 +324,11 @@
     <Content Include="Areas\Admin\Views\BaiViets\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\BaiViets\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\NguoiDungs\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\NguoiDungs\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\NguoiDungs\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\NguoiDungs\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\NguoiDungs\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />

@@ -241,5 +241,37 @@ namespace WebTroChuyen.Controllers
 
             return Json(result);
         }
+
+        [HttpPost]
+        public ActionResult BaoCao(int baiVietID, string lyDoBaoCao)
+        {
+            // Kiểm tra xem người dùng đã đăng nhập chưa
+            if (Session["UserID"] == null)
+            {
+                // Chưa đăng nhập, bạn có thể chuyển hướng hoặc xử lý theo ý của bạn
+                return RedirectToAction("DangNhap", "Users");
+            }
+
+            // Lấy thông tin người dùng đang đăng nhập
+            int userID = (int)Session["UserID"];
+
+            // Tạo đối tượng báo cáo
+            BaiVietBaoCao baoCao = new BaiVietBaoCao
+            {
+                BaiVietID = baiVietID,
+                UserID = userID,
+                LyDoBaoCao = lyDoBaoCao,
+                NgayBaoCao = DateTime.Now,
+                TrangThai = "Chưa xử lý"
+            };
+
+            // Thêm báo cáo vào cơ sở dữ liệu
+            db.BaiVietBaoCaos.Add(baoCao);
+            db.SaveChanges();
+
+            // Có thể cập nhật thông báo hoặc chuyển hướng người dùng
+
+            return RedirectToAction("Index"); // Chẳng hạn
+        }
     }
 }

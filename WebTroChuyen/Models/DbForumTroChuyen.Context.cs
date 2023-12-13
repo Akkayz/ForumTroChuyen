@@ -28,14 +28,13 @@ namespace WebTroChuyen.Models
         }
     
         public virtual DbSet<BaiViet> BaiViets { get; set; }
+        public virtual DbSet<BaiVietBaoCao> BaiVietBaoCaos { get; set; }
         public virtual DbSet<BinhLuan> BinhLuans { get; set; }
         public virtual DbSet<Chat> Chats { get; set; }
         public virtual DbSet<DanhMuc> DanhMucs { get; set; }
         public virtual DbSet<DiemSoNguoiDung> DiemSoNguoiDungs { get; set; }
         public virtual DbSet<Dislike> Dislikes { get; set; }
         public virtual DbSet<HeThongCapDo> HeThongCapDoes { get; set; }
-        public virtual DbSet<HoatDong> HoatDongs { get; set; }
-        public virtual DbSet<HoatDongNguoiDung> HoatDongNguoiDungs { get; set; }
         public virtual DbSet<Like> Likes { get; set; }
         public virtual DbSet<NguoiDung> NguoiDungs { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }

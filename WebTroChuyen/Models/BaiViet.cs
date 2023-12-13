@@ -19,6 +19,7 @@ namespace WebTroChuyen.Models
         {
             this.Dislikes = new HashSet<Dislike>();
             this.Likes = new HashSet<Like>();
+            this.BaiVietBaoCaos = new HashSet<BaiVietBaoCao>();
             this.BinhLuans = new HashSet<BinhLuan>();
         }
     
@@ -39,6 +40,8 @@ namespace WebTroChuyen.Models
         public virtual ICollection<Like> Likes { get; set; }
         public virtual DanhMuc DanhMuc { get; set; }
         public virtual NguoiDung NguoiDung { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BaiVietBaoCao> BaiVietBaoCaos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BinhLuan> BinhLuans { get; set; }
     }
