@@ -34,9 +34,16 @@ namespace WebTroChuyen.Controllers
             var userId = Session["UserID"] as int? ?? 0;
             var danhSachBaiViet = db.BaiViets
                 .Where(bv => bv.TrangThai)
+                .Select(bv => new BaiVietWithCommentsModel
+                {
+                    BaiViet = bv,
+                    SoLuongBinhLuan = db.BinhLuans.Count(bl => bl.BaiVietID == bv.BaiVietID)
+                })
                 .ToList();
+
             ViewBag.UserId = userId;
             ViewBag.DanhSachBaiViet = danhSachBaiViet;
+
             return PartialView("");
         }
 

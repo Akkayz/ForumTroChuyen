@@ -152,6 +152,7 @@
     <Compile Include="Models\BaiViet.cs">
       <DependentUpon>DbForumTroChuyen.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BaiVietWithCommentsModel.cs" />
     <Compile Include="Models\BinhLuan.cs">
       <DependentUpon>DbForumTroChuyen.tt</DependentUpon>
     </Compile>

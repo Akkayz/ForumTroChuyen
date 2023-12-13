@@ -1,7 +1,10 @@
 ﻿@using WebTroChuyen.Models
 <section class="list-view">
-    @foreach (var baiViet in ViewBag.DanhSachBaiViet)
+    @foreach (var item in ViewBag.DanhSachBaiViet)
     {
+        var baiViet = item.BaiViet;
+        var soLuongBinhLuan = item.SoLuongBinhLuan;
+
         var userId = ViewBag.UserId;
         var existingLike = null as Like;
         foreach (var like in baiViet.Likes)
@@ -73,7 +76,7 @@
                     <li class="post-vote-item me-4">
                         <a href="#" class="post-vote-link" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none;">
                             <i class="fa fa-comment"></i>
-                            <span class="post-vote-count">3</span>
+                            <span class="post-vote-count">@soLuongBinhLuan</span>
                         </a>
                     </li>
                     <li class="post-vote-item dropdown">

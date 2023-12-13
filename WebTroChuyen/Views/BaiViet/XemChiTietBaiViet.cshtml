@@ -3,7 +3,11 @@
     ViewBag.Title = "XemChiTietBaiViet";
     Layout = "~/Views/Shared/_LayoutTrangChu.cshtml";
 }
-
+@{
+    int soLuongBinhLuan = ViewBag.ChiTietBaiViet != null && ViewBag.ChiTietBaiViet.DanhSachBinhLuan != null
+        ? ViewBag.ChiTietBaiViet.DanhSachBinhLuan.Count
+        : 0;
+}
 @{
     var userId = ViewBag.UserId;
     var existingLike = Model.Likes.FirstOrDefault(like => like.UserID == userId);
@@ -12,9 +16,9 @@
     var existingDislikeCss = existingDislike != null ? "red" : "blue";
 }
 
-<div class="container bg-white" style="max-width: 1000px">
+<div class="container bg-white p-4" style="max-width: 1000px; border: 1px solid #e5e5e5;">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-8 border p-3">
             <h2>@Model.TieuDe</h2>
             <div class="account-frame d-flex">
                 <img src="~/Images/UserAvatar/@Model.NguoiDung.Avatar" width="40" height="40" alt="Avatar" class="avatar me-3">
@@ -42,7 +46,7 @@
                     <li class="post-vote-item me-4">
                         <a href="#" class="post-vote-link" style="padding: 5px; box-shadow: 0 0 0 1px #e5e5e5; text-decoration: none;">
                             <i class="fa fa-comment"></i>
-                            <span class="post-vote-count">3</span>
+                            <span class="post-vote-count">@soLuongBinhLuan</span>
                         </a>
                     </li>
                     <li class="post-vote-item dropdown">
@@ -56,47 +60,58 @@
                 </ul>
             </section>
         </div>
-        <div class="row mt-4">
-            <div class="col-md-12">
-                <h4>Bình Luận</h4>
-                @using (Html.BeginForm("ThemBinhLuan", "BaiViet", new { baiVietID = Model.BaiVietID }, FormMethod.Post))
-                {
-                    <div class="mb-3">
-                        <label for="noiDungBinhLuan" class="form-label">Nội Dung Bình Luận</label>
-                        <textarea class="form-control" id="noiDungBinhLuan" name="noiDungBinhLuan" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Gửi Bình Luận</button>
-                }
-            </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <h4>Bình Luận (@soLuongBinhLuan)</h4>
+            @using (Html.BeginForm("ThemBinhLuan", "BaiViet", new { baiVietID = Model.BaiVietID }, FormMethod.Post))
+            {
+                <div class="mb-3">
+
+                    <textarea class="form-control" id="noiDungBinhLuan" name="noiDungBinhLuan" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Gửi Bình Luận</button>
+            }
+
+            @if (ViewData.ModelState.IsValid)
+            {
+                <p class="text-success mt-2">Bình luận đã được thêm thành công!</p>
+            }
+            else
+            {
+                <p class="text-danger mt-2">Có lỗi khi thêm bình luận. Vui lòng kiểm tra lại thông tin đầu vào.</p>
+            }
         </div>
-        <div class="row mt-4">
-            <div class="col-md-12">
-                <h4>Danh Sách Bình Luận</h4>
-                @if (ViewBag.ChiTietBaiViet != null && ViewBag.ChiTietBaiViet.DanhSachBinhLuan != null)
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <h4>Danh Sách Bình Luận</h4>
+            @if (ViewBag.ChiTietBaiViet != null && ViewBag.ChiTietBaiViet.DanhSachBinhLuan != null)
+            {
+                foreach (var binhLuan in ViewBag.ChiTietBaiViet.DanhSachBinhLuan)
                 {
-                    foreach (var binhLuan in ViewBag.ChiTietBaiViet.DanhSachBinhLuan)
-                    {
-                        <div class="comment">
-                            <div class="comment-info">
-                                <img src="~/Images/UserAvatar/@binhLuan.NguoiDung.Avatar" width="30" height="30" alt="Avatar" class="avatar me-2">
-                                <span class="user-info">
-                                    <strong>@binhLuan.NguoiDung.TenNguoiDung</strong>
-                                    <span class="text-opacity">Cấp @binhLuan.NguoiDung.CapDo</span>
-                                </span>
-                            </div>
-                            <p>@binhLuan.NoiDung</p>
-                            <div class="comment-actions mt-2">
-                                <a href="#" class="me-2"><i class="fa fa-reply"></i> Trả lời</a>
-                                <a href="#" class="text-danger"><i class="fa fa-flag"></i> Báo cáo</a>
-                            </div>
+                    <div class="comment p-3 mb-3" style="border: 1px solid #e5e5e5;">
+                        <div class="comment-info">
+                            <img src="~/Images/UserAvatar/@binhLuan.NguoiDung.Avatar" width="30" height="30" alt="Avatar" class="avatar me-2">
+                            <span class="user-info">
+                                <strong>@binhLuan.NguoiDung.TenNguoiDung</strong>
+                                <span class="text-opacity">Cấp @binhLuan.NguoiDung.CapDo</span>
+                            </span>
                         </div>
-                    }
+                        <p class="mt-2">@binhLuan.NoiDung</p>
+                        <div class="comment-actions mt-2">
+                            <a href="#" class="me-2"><i class="fa fa-reply"></i> Trả lời</a>
+                            <a href="#" class="text-danger"><i class="fa fa-flag"></i> Báo cáo</a>
+                        </div>
+                    </div>
                 }
-                else
-                {
-                    <p>Không có bình luận nào.</p>
-                }
-            </div>
+            }
+            else
+            {
+                <p>Không có bình luận nào.</p>
+            }
         </div>
     </div>
 </div>
