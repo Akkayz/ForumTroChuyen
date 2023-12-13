@@ -1,0 +1,35 @@
+﻿@model List<WebTroChuyen.Models.BaiViet>
+
+@{
+    ViewBag.Title = "BaiViet";
+    Layout = "~/Views/Shared/_LayoutTrangChu.cshtml";
+}
+
+<div class="container bg-white" style="max-width: 1000px;">
+    <div class="row">
+        <div class="col-md-8">
+            @Html.Action("BaiVietPartial", "BaiViet")
+        </div>
+        <div class="col-md-4">
+            <h2>Top thành viên</h2>
+            <ul class="list-group top-members-list">
+                @for (var i = 0; i < ViewBag.TopThanhVien.Count; i++)
+                {
+                    var thanhVien = ViewBag.TopThanhVien[i];
+                    <li class="list-group-item top-member d-flex">
+                        <div class="rank me-3"><h3 style="max-height: 30px; color: #00ffff;">@($"{i + 1:00}")</h3></div>
+                        <div class="user-image">
+                            <img src="~/Images/UserAvatar/@thanhVien.Avatar" width="60" height="60" alt="Ảnh thành viên @(i + 1)">
+                        </div>
+                        <div class="user-info d-flex align-items-center">
+                            <div class="user-details">
+                                <h5 class="user-name text-truncate">@thanhVien.TenNguoiDung</h5>
+                                <span class="user-level d-flex align-items-center justify-content-center rounded bg-primary text-white" style="width: 60px; max-height: 30px;">Cấp @thanhVien.CapDo</span>
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

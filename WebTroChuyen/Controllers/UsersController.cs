@@ -162,7 +162,7 @@ namespace WebTroChuyen.Controllers
                     // Lưu thông tin người dùng vào Context.User.Identity.Name
                     System.Web.HttpContext.Current.User = new GenericPrincipal(new GenericIdentity(user.UserName), null);
 
-                    return RedirectToAction("BaiViet", "BaiViet");
+                    return RedirectToAction("Index", "BaiViet");
                 }
                 else
                 {

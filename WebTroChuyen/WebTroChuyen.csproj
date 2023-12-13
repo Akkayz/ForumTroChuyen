@@ -354,7 +354,8 @@
     <Content Include="Views\Users\DangNhap.cshtml" />
     <Content Include="Views\Users\DangKy.cshtml" />
     <Content Include="Views\DangBai\DangBai.cshtml" />
-    <Content Include="Views\BaiViet\BaiViet.cshtml" />
+    <Content Include="Views\BaiViet\Index.cshtml" />
+    <Content Include="Views\BaiViet\BaiVietPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

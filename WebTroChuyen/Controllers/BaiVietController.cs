@@ -11,11 +11,8 @@ namespace WebTroChuyen.Controllers
     {
         private readonly ForumTroChuyenEntities db = new ForumTroChuyenEntities();
 
-        public ActionResult BaiViet()
+        public ActionResult Index()
         {
-            var danhSachBaiViet = db.BaiViets
-                .Where(bv => bv.TrangThai)
-                .ToList();
             var topThanhVien = db.NguoiDungs
                 .OrderByDescending(u => u.CapDo)
                 .Take(5)
@@ -24,11 +21,21 @@ namespace WebTroChuyen.Controllers
             // Lấy UserID từ Session
             var userId = Session["UserID"] as int? ?? 0;
 
-            ViewBag.DanhSachBaiViet = danhSachBaiViet;
             ViewBag.TopThanhVien = topThanhVien;
             ViewBag.UserId = userId;
 
             return View();
+        }
+
+        public ActionResult BaiVietPartial()
+        {
+            var userId = Session["UserID"] as int? ?? 0;
+            var danhSachBaiViet = db.BaiViets
+                .Where(bv => bv.TrangThai)
+                .ToList();
+            ViewBag.UserId = userId;
+            ViewBag.DanhSachBaiViet = danhSachBaiViet;
+            return PartialView("");
         }
 
         [HttpPost]
