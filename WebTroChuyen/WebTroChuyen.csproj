@@ -158,6 +158,7 @@
     <Compile Include="Models\Chat.cs">
       <DependentUpon>DbForumTroChuyen.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ChiTietBaiVietModel.cs" />
     <Compile Include="Models\DanhMuc.cs">
       <DependentUpon>DbForumTroChuyen.tt</DependentUpon>
     </Compile>

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebTroChuyen.Models;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 
 namespace WebTroChuyen.Controllers
 {
@@ -44,7 +45,6 @@ namespace WebTroChuyen.Controllers
         {
             var userId = Session["UserID"] as int? ?? 0;
 
-            // Retrieve the specific post for the given baiVietID
             var chiTietBaiViet = db.BaiViets
                 .Include(bv => bv.NguoiDung)
                 .Include(bv => bv.DanhMuc)
@@ -52,11 +52,88 @@ namespace WebTroChuyen.Controllers
 
             if (chiTietBaiViet == null)
             {
-                return HttpNotFound(); // Or handle the case where the post is not found
+                return HttpNotFound();
             }
 
+            // Lấy danh sách bình luận
+            var danhSachBinhLuan = db.BinhLuans
+                .Where(bl => bl.BaiVietID == baiVietID)
+                .Include(bl => bl.NguoiDung)
+                .OrderByDescending(bl => bl.NgayBinhLuan)
+                .ToList();
+
+            // Truyền danh sách bình luận vào ViewBag
+            ViewBag.ChiTietBaiViet = new ChiTietBaiVietModel
+            {
+                BaiViet = chiTietBaiViet,
+                DanhSachBinhLuan = danhSachBinhLuan
+            };
+
             ViewBag.UserId = userId;
-            return View(chiTietBaiViet); // Truyền dữ liệu chiTietBaiViet đến view
+            return View(chiTietBaiViet);
+        }
+
+        [HttpPost]
+        public ActionResult ThemBinhLuan(int baiVietID, string noiDungBinhLuan)
+        {
+            // Kiểm tra đăng nhập
+            var userId = Session["UserID"] as int? ?? 0;
+            if (userId == 0)
+            {
+                // Chưa đăng nhập, xử lý tùy ý (chẳng hạn chuyển hướng đến trang đăng nhập)
+                return RedirectToAction("DangNhap", "Users");
+            }
+
+            // Tạo một đối tượng BinhLuan mới
+            var binhLuan = new BinhLuan
+            {
+                BaiVietID = baiVietID,
+                UserID = userId,
+                NoiDung = noiDungBinhLuan,
+                NgayBinhLuan = DateTime.Now
+            };
+
+            // Kiểm tra validation trước khi lưu vào cơ sở dữ liệu
+            if (!ModelState.IsValid)
+            {
+                // Có lỗi validation
+                // Có thể xử lý lỗi hoặc trả về view với thông báo lỗi
+                return View("ErrorView");
+            }
+
+            try
+            {
+                // Thêm vào cơ sở dữ liệu
+                db.BinhLuans.Add(binhLuan);
+                db.SaveChanges();
+
+                // Chuyển hướng lại trang chi tiết bài viết
+                return RedirectToAction("XemChiTietBaiViet", new { baiVietID = baiVietID });
+            }
+            catch (DbEntityValidationException ex)
+            {
+                // Có lỗi khi validate entity
+                // In ra lỗi để debug
+                foreach (var validationErrors in ex.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        Console.WriteLine($"Property: {validationError.PropertyName} Error: {validationError.ErrorMessage}");
+                    }
+                }
+
+                // Có thể xử lý lỗi hoặc trả về view với thông báo lỗi
+                return View("ErrorView");
+            }
+            catch (Exception ex)
+            {
+                // Có lỗi khác khi lưu vào cơ sở dữ liệu
+                // In ra lỗi để debug
+                Console.WriteLine(ex.Message);
+
+                // Có thể xử lý lỗi hoặc trả về view với thông báo lỗi
+                return View("ErrorView");
+            }
         }
 
         [HttpPost]

@@ -27,7 +27,7 @@
           <Property Name="BinhLuanID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="BaiVietID" Type="int" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
-          <Property Name="NoiDung" Type="text" Nullable="false" />
+          <Property Name="NoiDung" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="NgayBinhLuan" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Chat">
@@ -165,7 +165,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__HoatDongN__HoatD__5535A963">
+        <Association Name="FK__HoatDongN__HoatD__59063A47">
           <End Role="HoatDong" Type="Self.HoatDong" Multiplicity="0..1" />
           <End Role="HoatDongNguoiDung" Type="Self.HoatDongNguoiDung" Multiplicity="*" />
           <ReferentialConstraint>
@@ -342,7 +342,7 @@
             <End Role="NguoiDung" EntitySet="NguoiDung" />
             <End Role="Dislikes" EntitySet="Dislikes" />
           </AssociationSet>
-          <AssociationSet Name="FK__HoatDongN__HoatD__5535A963" Association="Self.FK__HoatDongN__HoatD__5535A963">
+          <AssociationSet Name="FK__HoatDongN__HoatD__59063A47" Association="Self.FK__HoatDongN__HoatD__59063A47">
             <End Role="HoatDong" EntitySet="HoatDong" />
             <End Role="HoatDongNguoiDung" EntitySet="HoatDongNguoiDung" />
           </AssociationSet>
@@ -522,7 +522,7 @@
           <Property Name="BinhLuanID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="BaiVietID" Type="Int32" Nullable="false" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="NoiDung" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="NoiDung" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="NgayBinhLuan" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="BaiViet" Relationship="ForumTroChuyenModel.FK_BinhLuan_BaiViet" FromRole="BinhLuan" ToRole="BaiViet" />
           <NavigationProperty Name="NguoiDung" Relationship="ForumTroChuyenModel.FK_BinhLuan_NguoiDung" FromRole="BinhLuan" ToRole="NguoiDung" />
